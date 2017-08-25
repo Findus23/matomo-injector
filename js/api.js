@@ -1,9 +1,8 @@
-(function(chrome) {
-  chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
-    var website = location.protocol + '//' + location.host;
-    switch(request.method) {
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+  var website = location.protocol + '//' + location.host;
+  switch (request.method) {
     case 'setData':
-      var syncdata =  {};
+      var syncdata = {};
       syncdata[website] = request.customjs;
       chrome.storage.sync.set(syncdata);
       break;
@@ -14,17 +13,18 @@
       });
       break;
     case 'removeData':
-      chrome.storage.sync.remove(website, function() {});
+      chrome.storage.sync.remove(website, function() {
+      });
       break;
     case 'goTo':
       window.location = request.link;
       break;
     default:
       sendResponse({src: '', config: {}});
-    }
-    if( request.reload ) {
-      window.location.reload();
-    }
-  });
+  }
+  if (request.reload) {
+    window.location.reload();
+  }
+  return true;
+});
 
-})(chrome);
