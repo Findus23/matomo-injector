@@ -1,0 +1,22 @@
+{
+  "extention_description": {
+    "message": "Run custom JavaScript on any website.",
+    "description": "a short description shown in the extention list"
+  },
+  "select_host_title": {
+    "message": "List of websites modified by Your custom js",
+    "description": "title-text of dropdown"
+  },
+  "select_host_goto": {
+    "message": "Jump to the selected host",
+    "description": "message if a currently not opened webpage is opened"
+  },
+  "placeholder_javascript": {
+    "message": "// Here You can type your custom JavaScript...",
+    "description": "placeholder for javascript editor (needs to be a valid comment)"
+  },
+  "delete_warning": {
+    "message": "Do you really want to delete all data for this host?",
+    "description": "confirmation message when deleting the js for a host"
+  }
+}
