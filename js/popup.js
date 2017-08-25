@@ -158,7 +158,7 @@ document.addEventListener('DOMContentLoaded', function() {
     apiclb: {
       onSelectedTab: function(tab) {
         popup.tabId = tab.id;
-        chrome.tabs.sendMessage(popup.tabId, {method: "getData", reload: false}, popup.apiclb.onGetData);
+        chrome.tabs.sendRequest(popup.tabId, {method: "getData", reload: false}, popup.apiclb.onGetData);
       },
       onGetData: function(response) {
         if (!response || typeof response.host !== 'string') {
@@ -296,7 +296,7 @@ document.addEventListener('DOMContentLoaded', function() {
       data.source = popup.generateScriptDataUrl(data.source);
 
       // Send new data to apply
-      chrome.tabs.sendMessage(popup.tabId, {method: "setData", customjs: data, reload: true});
+      chrome.tabs.sendRequest(popup.tabId, {method: "setData", customjs: data, reload: true});
 
       // Save local copy of data
       popup.storage.setMode(popup.storage.MODE.private);
@@ -335,7 +335,7 @@ document.addEventListener('DOMContentLoaded', function() {
         popup.storage.set('hosts', newHosts);
 
         // Remove customjs from frontend
-        chrome.tabs.sendMessage(popup.tabId, {method: "removeData", reload: false});
+        chrome.tabs.sendRequest(popup.tabId, {method: "removeData", reload: false});
 
         // Set-up empty data
         popup.data = Object.assign(true, {}, popup.emptyDataPattern);
@@ -366,7 +366,7 @@ document.addEventListener('DOMContentLoaded', function() {
    */
   popup.el.hostGoToLink.addEventListener('click', function() {
     var link = popup.el.hostSelect.val();
-    chrome.tabs.sendMessage(popup.tabId, {method: "goTo", link: link, reload: false});
+    chrome.tabs.sendRequest(popup.tabId, {method: "goTo", link: link, reload: false});
     window.close();
   });
 
