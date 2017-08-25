@@ -4,11 +4,12 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "ace-builds": "^1.2.8",
     "purecss": "^1.0.0"
   },
   "devDependencies": {},
   "scripts": {
-    "copy": "rm -rf libs && mkdir -p libs/purecss/ && cp node_modules/purecss/build/*.css libs/purecss/"
+    "copy": "bash copy.sh"
   },
   "repository": {
     "type": "git",

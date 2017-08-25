@@ -3,16 +3,16 @@ document.addEventListener('DOMContentLoaded', function() {
   var popup = {
     key: 'popup',
     el: {
-      popup: $('#customjs'),
-      popupForm: $('#popup-form'),
-      hostSelect: $('#host'),
-      hostGoToLink: $('#goto-host'),
-      enableCheck: $('#enable'),
-      sourceEditor: $('#ace-editor'),
-      saveBtn: $('#save'),
-      resetBtn: $('#reset'),
-      draftRemoveLink: $('#draft-remove'),
-      error: $('#error')
+      popup: document.getElementById("customjs"),
+      popupForm: document.getElementById("popup-form"),
+      hostSelect: document.getElementById("host"),
+      hostGoToLink: document.getElementById("goto-host"),
+      enableCheck: document.getElementById("enable"),
+      sourceEditor: document.getElementById("ace-editor"),
+      saveBtn: document.getElementById("save"),
+      resetBtn: document.getElementById("reset"),
+      draftRemoveLink: document.getElementById("draft-remove"),
+      error: document.getElementById("error")
     },
     title: {
       include: {
@@ -22,11 +22,11 @@ document.addEventListener('DOMContentLoaded', function() {
       draft: "This is a draft, click to remove it"
     },
     applyTitles: function() {
-      this.el.hostSelect.attr('title', chrome.i18n.getMessage("select_host_title"));
-      this.el.hostGoToLink.attr('title', chrome.i18n.getMessage("select_host_goto"));
+      this.el.hostSelect.setAttribute('title', chrome.i18n.getMessage("select_host_title"));
+      this.el.hostGoToLink.setAttribute('title', chrome.i18n.getMessage("select_host_goto"));
 
-      this.el.saveBtn.attr('title', this.title.save);
-      this.el.draftRemoveLink.attr('title', this.title.draft);
+      this.el.saveBtn.setAttribute('title', this.title.save);
+      this.el.draftRemoveLink.setAttribute('title', this.title.draft);
     },
     host: undefined,
     emptyDataPattern: {
@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function() {
       defaultValue: chrome.i18n.getMessage("placeholder_javascript"),
       value: '',
       init: function() {
-        var editor = this.editorInstance = ace.edit(popup.el.sourceEditor[0]);
+        var editor = this.editorInstance = ace.edit(popup.el.sourceEditor);
         editor.setTheme("ace/theme/tomorrow");
         editor.getSession().setMode("ace/mode/javascript");
         // editor.setHighlightActiveLine(false);
@@ -141,7 +141,7 @@ document.addEventListener('DOMContentLoaded', function() {
           var data = this._getData();
           delete data[key];
 
-          if ($.isEmptyObject(data)) {
+          if (Object.keys(data).length === 0) {
             this.remove();
           }
           else {
@@ -194,7 +194,7 @@ document.addEventListener('DOMContentLoaded', function() {
           if (host === url) {
             option.setAttribute('selected', 'selected');
           }
-          popup.el.hostSelect.append(option);
+          popup.el.hostSelect.appendChild(option);
         });
 
         // Store host (current included in array) if customjs is defined
@@ -252,7 +252,7 @@ document.addEventListener('DOMContentLoaded', function() {
     applyData: function(data, notDraft) {
 
       if (data && !notDraft) {
-        this.el.draftRemoveLink.removeClass('is-hidden');
+        this.el.draftRemoveLink.classList.remove('is-hidden');
       }
 
       data = data || this.data;
@@ -262,7 +262,7 @@ document.addEventListener('DOMContentLoaded', function() {
       }
 
       // Set enable checkbox
-      popup.el.enableCheck.prop('checked', data.config.enable);
+      popup.el.enableCheck.checked = data.config.enable;
 
       // Apply source into editor
       popup.editor.apply(data.source);
@@ -270,7 +270,7 @@ document.addEventListener('DOMContentLoaded', function() {
     getCurrentData: function() {
       return {
         config: {
-          enable: popup.el.enableCheck.prop('checked')
+          enable: popup.el.enableCheck.checked
         },
         source: popup.editor.editorInstance.getValue()
       };
@@ -280,20 +280,19 @@ document.addEventListener('DOMContentLoaded', function() {
       popup.storage.remove('draft');
 
       popup.applyData();
-      popup.el.draftRemoveLink.addClass('is-hidden');
+      popup.el.draftRemoveLink.classList.add('is-hidden');
     },
     save: function(e) {
       e.preventDefault();
 
       // Is allowed to save?
-      if (popup.el.saveBtn.hasClass('pure-button-disabled')) {
+      if (popup.el.saveBtn.classList.contains('pure-button-disabled')) {
         return false;
       }
 
       var data = popup.getCurrentData();
 
       // Transform source for correct apply
-      data.config.extra = data.config.extra.replace("\n", ';');
       data.source = popup.generateScriptDataUrl(data.source);
 
       // Send new data to apply
@@ -307,7 +306,7 @@ document.addEventListener('DOMContentLoaded', function() {
       popup.removeDraft();
 
       // Close popup
-      // window.close();
+      window.close();
 
       return false;
     },
@@ -315,7 +314,7 @@ document.addEventListener('DOMContentLoaded', function() {
       e.preventDefault();
 
       // Is allowed to reset?
-      if (popup.el.resetBtn.hasClass('pure-button-disabled')) {
+      if (popup.el.resetBtn.classList.contains('pure-button-disabled')) {
         return false;
       }
 
@@ -348,8 +347,8 @@ document.addEventListener('DOMContentLoaded', function() {
       return false;
     },
     error: function() {
-      popup.el.popup.addClass('customjs--error');
-      popup.el.error.removeClass('is-hidden');
+      popup.el.popup.classList.add('customjs--error');
+      popup.el.error.classList.remove('is-hidden');
     }
   };
 
@@ -363,9 +362,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
   /**
-   * Click to goTo host link
+   * Click to goTo host link //TODO: JQUERY
    */
-  popup.el.hostGoToLink.on('click', function() {
+  popup.el.hostGoToLink.addEventListener('click', function() {
     var link = popup.el.hostSelect.val();
     chrome.tabs.sendRequest(popup.tabId, {method: "goTo", link: link, reload: false});
     window.close();
@@ -400,8 +399,8 @@ document.addEventListener('DOMContentLoaded', function() {
           popup.storage.set('draft', draft);
 
           // Auto switch 'enable checkbox' on source edit
-          if (!popup.el.enableCheck.hasClass('not-auto-change')) {
-            popup.el.enableCheck.prop('checked', true);
+          if (!popup.el.enableCheck.classList.contains('not-auto-change')) {
+            popup.el.enableCheck.checked = true;
           }
         }
       },
@@ -412,8 +411,8 @@ document.addEventListener('DOMContentLoaded', function() {
    * Change host by select
    */
 
-  popup.el.hostSelect.on('change', function(e) {
-    var host = $(this).val(),
+  popup.el.hostSelect.addEventListener('change', function(e) {
+    var host = this.value,
         hostData = JSON.parse(localStorage.getItem(popup.key + '-' + host), true);
 
 
@@ -422,12 +421,12 @@ document.addEventListener('DOMContentLoaded', function() {
       clearInterval(draftAutoSaveInterval);
 
       // Show goto link
-      popup.el.hostGoToLink.removeClass('is-hidden');
+      popup.el.hostGoToLink.classList.remove('is-hidden');
 
       // Hide controls
-      popup.el.saveBtn.addClass('pure-button-disabled');
-      popup.el.resetBtn.addClass('pure-button-disabled');
-      popup.el.draftRemoveLink.addClass('is-hidden');
+      popup.el.saveBtn.classList.add('pure-button-disabled');
+      popup.el.resetBtn.classList.add('pure-button-disabled');
+      popup.el.draftRemoveLink.classList.add('is-hidden');
 
       // Apply other host data
       try {
@@ -443,13 +442,13 @@ document.addEventListener('DOMContentLoaded', function() {
       draftAutoSaveInterval = setInterval(draftAutoSave, 2000);
 
       // Hide goto link
-      popup.el.hostGoToLink.addClass('is-hidden');
+      popup.el.hostGoToLink.classList.add('is-hidden');
 
       // Show controls
-      popup.el.saveBtn.removeClass('pure-button-disabled');
-      popup.el.resetBtn.removeClass('pure-button-disabled');
+      popup.el.saveBtn.classList.remove('pure-button-disabled');
+      popup.el.resetBtn.classList.remove('pure-button-disabled');
       if (popup.storage.get('draft')) {
-        popup.el.draftRemoveLink.removeClass('is-hidden');
+        popup.el.draftRemoveLink.classList.remove('is-hidden');
       }
 
       // Apply current host data
@@ -461,28 +460,28 @@ document.addEventListener('DOMContentLoaded', function() {
   /**
    * Protect 'enable checkbox' if was manually modified
    */
-  popup.el.enableCheck.on('click', function() {
-    $(this).addClass('not-auto-change');
+  popup.el.enableCheck.addEventListener('click', function() {
+    this.classList.add('not-auto-change');
   });
 
   /**
    * Save script
    */
 
-  popup.el.saveBtn.on('click', popup.save);
+  popup.el.saveBtn.addEventListener('click', popup.save);
 
   /**
    * Reset script
    */
 
-  popup.el.resetBtn.on('click', popup.reset);
+  popup.el.resetBtn.addEventListener('click', popup.reset);
 
 
   /**
    * Remove draft
    */
 
-  popup.el.draftRemoveLink.on('click', popup.removeDraft);
+  popup.el.draftRemoveLink.addEventListener('click', popup.removeDraft);
 
 
 }, false);
