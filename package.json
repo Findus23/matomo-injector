@@ -1,0 +1,23 @@
+{
+  "name": "piwik-checker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "purecss": "^1.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "copy": "rm -rf libs && mkdir -p libs/purecss/ && cp node_modules/purecss/build/*.css libs/purecss/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Findus23/piwik-checker.git"
+  },
+  "author": "",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/Findus23/piwik-checker/issues"
+  },
+  "homepage": "https://github.com/Findus23/piwik-checker#readme"
+}
