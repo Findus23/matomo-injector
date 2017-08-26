@@ -3,13 +3,25 @@
     "message": "Run custom JavaScript on any website.",
     "description": "a short description shown in the extention list"
   },
-  "select_host_title": {
+  "host_title": {
     "message": "List of websites modified by Your custom js",
-    "description": "title-text of dropdown"
+    "description": "title-text of host selection dropdown"
   },
-  "select_host_goto": {
-    "message": "Jump to the selected host",
-    "description": "message if a currently not opened webpage is opened"
+  "save": {
+    "message": "save",
+    "description": "save-button text"
+  },
+  "save_title": {
+    "message": "Save and apply this script",
+    "description": "title text of save button"
+  },
+  "reset": {
+    "message": "reset",
+    "description": "reset-button text"
+  },
+  "reset_title": {
+    "message": "",
+    "description": "title text of reset button"
   },
   "placeholder_javascript": {
     "message": "// Here You can type your custom JavaScript...",
@@ -31,9 +43,17 @@
     "message": "remove draft",
     "description": "buttontext"
   },
+  "draft_remove_title": {
+    "message": "This is a draft, click to remove it",
+    "description": "title text of draft remove button"
+  },
   "goto_host": {
     "message": "go to",
     "description": "when a host that is currently not opened, a button apears for opening this host in the current tab"
+  },
+  "goto_host_title": {
+    "message": "Jump to the selected host",
+    "description": "message if a currently not opened webpage is opened"
   },
   "enable_description": {
     "message": "enable injection for this host",

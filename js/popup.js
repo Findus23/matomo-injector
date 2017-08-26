@@ -18,19 +18,19 @@ document.addEventListener('DOMContentLoaded', function() {
       include: {
         textarea: 'Uncomment address of script below or type your own (one per line)',
         mask: 'Click to close textarea popup'
-      },
-      draft: "This is a draft, click to remove it"
+      }
     },
-    applyTitles: function() {
-      this.el.hostSelect.setAttribute('title', chrome.i18n.getMessage("select_host_title"));
-      this.el.hostGoToLink.setAttribute('title', chrome.i18n.getMessage("select_host_goto"));
-      var translatableIDs = ["error-message", "error-tip"];
+    applyi18n: function() {
+      var translatableIDs = ["error-message", "error-tip", "save", "reset", "goto-host", "enable-description"];
       translatableIDs.forEach(function(id) {
         var translateKey = id.replace("-", "_");
         document.getElementById(id).innerText = chrome.i18n.getMessage(translateKey);
       });
-      this.el.saveBtn.setAttribute('title', this.title.save);
-      this.el.draftRemoveLink.setAttribute('title', this.title.draft);
+      var translatableTitles = ["host", "goto_host", "save", "reset", "draft_remove"];
+      translatableIDs.forEach(function(id) {
+        var translateKey = id.replace("-", "_") + "_title";
+        document.getElementById(id).setAttribute('title', chrome.i18n.getMessage(translateKey));
+      });
     },
     host: undefined,
     emptyDataPattern: {
@@ -364,7 +364,7 @@ document.addEventListener('DOMContentLoaded', function() {
    * Add titles to elements
    */
 
-  popup.applyTitles();
+  popup.applyi18n();
 
 
   /**
