@@ -22,5 +22,10 @@
   },
   "content_security_policy": "script-src 'self'; object-src 'self'",
   "permissions": [ "storage", "http://*/", "https://*/", "tabs" ],
-  "default_locale": "en"
-}
+  "default_locale": "en",
+  "applications": {
+    "gecko": {
+      "id": "tempid@lw1.at",
+      "strict_min_version": "42.0"
+    }
+  }}

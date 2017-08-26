@@ -107,3 +107,7 @@ a:hover {
   margin-right: 10px;
   font-size: 18px;
 }
+
+#editor {
+  font-family: monospace
+}

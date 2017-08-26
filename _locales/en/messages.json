@@ -31,7 +31,7 @@
     "message": "remove draft",
     "description": "buttontext"
   },
-  "goto-host": {
+  "goto_host": {
     "message": "go to",
     "description": "when a host that is currently not opened, a button apears for opening this host in the current tab"
   },

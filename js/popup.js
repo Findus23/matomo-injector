@@ -160,8 +160,8 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     },
     apiclb: {
-      onSelectedTab: function(tab) {
-        popup.tabId = tab.id;
+      onSelectedTab: function(tabs) {
+        popup.tabId = tabs[0].id;
         chrome.tabs.sendMessage(popup.tabId, {method: "getData", reload: false}, popup.apiclb.onGetData);
       },
       onGetData: function(response) {
@@ -388,7 +388,10 @@ document.addEventListener('DOMContentLoaded', function() {
    * Connect front end (load info about current site)
    */
 
-  chrome.tabs.getSelected(null, popup.apiclb.onSelectedTab);
+  chrome.tabs.query({
+    active: true,
+    lastFocusedWindow: true
+  }, popup.apiclb.onSelectedTab);
 
 
   /**
