@@ -24,7 +24,11 @@ document.addEventListener('DOMContentLoaded', function() {
     applyTitles: function() {
       this.el.hostSelect.setAttribute('title', chrome.i18n.getMessage("select_host_title"));
       this.el.hostGoToLink.setAttribute('title', chrome.i18n.getMessage("select_host_goto"));
-
+      var translatableIDs = ["error-message", "error-tip"];
+      translatableIDs.forEach(function(id) {
+        var translateKey = id.replace("-", "_");
+        document.getElementById(id).innerText = chrome.i18n.getMessage(translateKey);
+      });
       this.el.saveBtn.setAttribute('title', this.title.save);
       this.el.draftRemoveLink.setAttribute('title', this.title.draft);
     },

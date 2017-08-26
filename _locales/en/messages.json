@@ -18,5 +18,25 @@
   "delete_warning": {
     "message": "Do you really want to delete all data for this host?",
     "description": "confirmation message when deleting the js for a host"
+  },
+  "error_message": {
+    "message": "It seems like this page cannot be modified",
+    "description": "warning when injection fails"
+  },
+  "error_tip": {
+    "message": "maybe try refreshing this page",
+    "description": "additional tip when injection fails"
+  },
+  "draft_remove": {
+    "message": "remove draft",
+    "description": "buttontext"
+  },
+  "goto-host": {
+    "message": "go to",
+    "description": "when a host that is currently not opened, a button apears for opening this host in the current tab"
+  },
+  "enable_description": {
+    "message": "enable injection for this host",
+    "description": "label for checkbox"
   }
 }

@@ -1,4 +1,3 @@
-
 /**
  * Basic
  */
@@ -11,7 +10,7 @@
   height: 570px;
   color: #4A4A4A;
   font-size: 14px;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: sans-serif;
 }
 
 .customjs.customjs--error {
@@ -51,7 +50,6 @@ a:hover {
   padding: 10px 0;
 }
 
-
 /**
  * Host row (up)
  */
@@ -79,68 +77,6 @@ a:hover {
   margin-left: 2px;
 }
 
-
-/**
- * Share button
- */
-.share button {
-  display: none;
-  font-size: 16px;
-}
-
-
-/**
- * Include row (bellow top)
- */
-
-.include {
-  text-align: right;
-}
-
-.include__body {
-  color: #999;
-  font-size: 12px;
-  line-height: 35px;
-}
-
-.include__body select {
-  min-width: 110px;
-}
-
-.include__popbox {
-}
-
-.include__popbox__body {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  z-index: 10;
-  margin: -150px 0 0 -250px;
-  width: 500px;
-  height: 300px;
-}
-
-.include__popbox__body textarea {
-  width: 100%;
-  height: 100%;
-  color: #777;
-  font-size: 12px;
-  line-height: 180%;
-  resize: none;
-}
-
-.include__popbox__screenmask {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 5;
-  width: 100%;
-  height: 100%;
-  background-color: #ddd;
-  opacity: 0.4;
-}
-
-
 /**
  * Source row  (middle)
  */
@@ -163,57 +99,11 @@ a:hover {
  * Controls
  */
 
-.controls { }
+.controls {
+}
 
 .controls__save,
 .controls__reset {
   margin-right: 10px;
   font-size: 18px;
 }
-
-.controls__remove-draft { }
-
-/**
- * Donate
- */
-.donate {
-    text-align: right;
-}
-
-.donate img {
-    position: absolute;
-}
-
-.donate__button {
-    background: rgb(28, 184, 65); /* this is a green */
-    color: #fff;
-    font-size: 18px;
-}
-
-.donate-form {
-    width: 0;
-    height: 0;
-    overflow: hidden;
-}
-
-
-/**
- * Font icons
- */
-
-@font-face {
-  font-weight: normal;
-  font-style: normal;
-  font-family: 'customjs';
-  src: url('../font/customjs.svg?96127482#customjs') format('svg');
-}
-
-[class^="icon-"]:before, [class*=" icon-"]:before {
-  display: inline-block;
-  font-variant: normal;
-  font-family: "customjs";
-}
-
-.icon-left-open:before { content: '\e800'; } /* '' */
-.icon-right-open:before { content: '\e801'; } /* '' */
-.icon-share:before { content: '\e802'; } /* '' */
