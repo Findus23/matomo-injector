@@ -24,13 +24,13 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById(id).innerText = chrome.i18n.getMessage(translateKey);
       });
       var translatableTitles = ["host", "goto_host", "save", "reset", "draft_remove", "piwik_url", "site_id"];
-      translatableIDs.forEach(function(id) {
+      translatableTitles.forEach(function(id) {
         var translateKey = id.replace("-", "_") + "_title";
         document.getElementById(id).setAttribute('title', chrome.i18n.getMessage(translateKey));
       });
       popup.el.piwikURL.setAttribute("placeholder", chrome.i18n.getMessage("piwik_url_placeholder"));
       popup.el.siteID.setAttribute("placeholder", chrome.i18n.getMessage("site_id_placeholder"));
-      document.title = chrome.i18n.getMessage("extention_name")
+      document.title = chrome.i18n.getMessage("extention_name");
     },
     host: undefined,
     url: undefined,
@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // editor.setHighlightActiveLine(false);
         editor.getSession().on('change', this.onChange);
         editor.$blockScrolling = Infinity;
-        editor.setReadOnly(true)
+        editor.setReadOnly(true);
       },
       apply: function(source) {
         var editor = this.editorInstance;
@@ -67,8 +67,7 @@ document.addEventListener('DOMContentLoaded', function() {
         popup.host = url.host;
         popup.protocol = url.protocol;
         popup.url = popup.protocol + "//" + popup.host;
-        // chrome.tabs.sendMessage(popup.tabId, {method: "getData", reload: false}, popup.apiclb.onGetData);
-        chrome.storage.sync.get(popup.url, popup.apiclb.onGetData)
+        chrome.storage.sync.get(popup.url, popup.apiclb.onGetData);
       },
       onGetData: function(items) {
         // console.warn(response);
