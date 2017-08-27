@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', function() {
     key: 'popup',
     el: {
       popup: document.getElementById("customjs"),
-      popupForm: document.getElementById("popup-form"),
       hostSelect: document.getElementById("host"),
       hostGoToLink: document.getElementById("goto-host"),
       enableCheck: document.getElementById("enable"),
@@ -12,25 +11,25 @@ document.addEventListener('DOMContentLoaded', function() {
       saveBtn: document.getElementById("save"),
       resetBtn: document.getElementById("reset"),
       draftRemoveLink: document.getElementById("draft-remove"),
-      error: document.getElementById("error")
-    },
-    title: {
-      include: {
-        textarea: 'Uncomment address of script below or type your own (one per line)',
-        mask: 'Click to close textarea popup'
-      }
+      error: document.getElementById("error"),
+      piwikForm: document.getElementById("piwik-form"),
+      piwikURL: document.getElementById("piwik-url"),
+      siteID: document.getElementById("site-id")
     },
     applyi18n: function() {
-      var translatableIDs = ["error-message", "error-tip", "save", "reset", "goto-host", "enable-description"];
+      var translatableIDs = ["error-message", "error-tip", "save", "reset", "goto-host", "enable-description", "host-label"];
       translatableIDs.forEach(function(id) {
         var translateKey = id.replace("-", "_");
         document.getElementById(id).innerText = chrome.i18n.getMessage(translateKey);
       });
-      var translatableTitles = ["host", "goto_host", "save", "reset", "draft_remove"];
+      var translatableTitles = ["host", "goto_host", "save", "reset", "draft_remove", "piwik_url", "site_id"];
       translatableIDs.forEach(function(id) {
         var translateKey = id.replace("-", "_") + "_title";
         document.getElementById(id).setAttribute('title', chrome.i18n.getMessage(translateKey));
       });
+      popup.el.piwikURL.setAttribute("placeholder", chrome.i18n.getMessage("piwik_url_placeholder"));
+      popup.el.siteID.setAttribute("placeholder", chrome.i18n.getMessage("site_id_placeholder"));
+      document.title = chrome.i18n.getMessage("extention_name")
     },
     host: undefined,
     emptyDataPattern: {
@@ -52,6 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // editor.setHighlightActiveLine(false);
         editor.getSession().on('change', this.onChange);
         editor.$blockScrolling = Infinity;
+        // editor.setReadOnly(true)
       },
       apply: function(source) {
         var editor = this.editorInstance;
@@ -242,6 +242,32 @@ document.addEventListener('DOMContentLoaded', function() {
         popup.applyData(popup.storage.get('draft'));
       }
     },
+
+    piwik: {
+      defaultTrackingCode: "var _paq = _paq || [];\n" +
+      "/* tracker methods like \"setCustomDimension\" should be called before \"trackPageView\" */\n" +
+      "_paq.push(['trackPageView']);\n" +
+      "_paq.push(['enableLinkTracking']);\n" +
+      "(function() {\n" +
+      "  var u=\"{{PIWIKURL}}\";\n" +
+      "  _paq.push(['setTrackerUrl', u+'piwik.php']);\n" +
+      "  _paq.push(['setSiteId', '{{SITEID}}']);\n" +
+      "  var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];\n" +
+      "  g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);\n" +
+      "})();",
+      handleTrackingCode: function() {
+        var piwikURL = encodeURI(popup.el.piwikURL.value);
+        var siteID = parseInt(popup.el.siteID.value, 10);
+        if (!siteID || !piwikURL) {
+          return false;
+        }
+        console.warn(piwikURL, siteID);
+        var js = popup.piwik.defaultTrackingCode;
+        js = js.replace("{{PIWIKURL}}", piwikURL);
+        js = js.replace("{{SITEID}}", String(siteID));
+        popup.editor.apply(js)
+      }
+    },
     generateScriptDataUrl: function(script) {
       var b64 = 'data:text/javascript';
       // base64 may be smaller, but does not handle unicode characters
@@ -394,6 +420,10 @@ document.addEventListener('DOMContentLoaded', function() {
   }, popup.apiclb.onSelectedTab);
 
 
+  popup.el.piwikForm.querySelectorAll("input").forEach(function(input) {
+    input.addEventListener("change", popup.piwik.handleTrackingCode)
+  });
+
   /**
    * Auto save draft
    */
@@ -402,6 +432,10 @@ document.addEventListener('DOMContentLoaded', function() {
         var draft = popup.getCurrentData(),
             source = draft.source;
 
+        if (!popup.data) {
+          popup.error();
+          return false;
+        }
         if ((source || !popup.data.source) && source !== popup.data.source) {
 
           popup.storage.setMode(popup.storage.MODE.private);

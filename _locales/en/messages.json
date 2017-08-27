@@ -1,10 +1,18 @@
 {
+  "extention_name": {
+    "message": "Piwik Injector",
+    "description": "name of the extention"
+  },
   "extention_description": {
     "message": "Run custom JavaScript on any website.",
     "description": "a short description shown in the extention list"
   },
+  "host_label": {
+    "message": "hosts",
+    "description": "label of host selection dropdown"
+  },
   "host_title": {
-    "message": "List of websites modified by Your custom js",
+    "message": "List of websites modified by your custom js",
     "description": "title-text of host selection dropdown"
   },
   "save": {
@@ -58,5 +66,21 @@
   "enable_description": {
     "message": "enable injection for this host",
     "description": "label for checkbox"
+  },
+  "piwik_url_title": {
+    "message": "",
+    "description": "title text of piwik URL input"
+  },
+  "piwik_url_placeholder": {
+    "message": "piwik URL",
+    "description": "placeholder text of piwik URL input"
+  },
+  "site_id_title": {
+    "message": "",
+    "description": "title text of site ID input"
+  },
+  "site_id_placeholder": {
+    "message": "site ID",
+    "description": "placeholder text of site ID input"
   }
 }

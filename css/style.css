@@ -18,8 +18,12 @@
   height: 75px;
 }
 
-.customjs.customjs--error form {
+.customjs.customjs--error div, .customjs.customjs--error form {
   display: none;
+}
+
+.customjs.customjs--error #error {
+  display: block;
 }
 
 a,

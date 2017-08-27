@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
-  "name": "Piwik Injector",
+  "name": "__MSG_extention_name__",
   "short_name": "piwik-injector",
   "version": "3.0.0",
   "author": "Lukas Winkler, xcv58, hromadadan",

@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
     <head>
-        <title>Custom JavaScript</title>
+        <title></title>
 
         <link href="libs/purecss/base-min.css" rel="stylesheet">
         <link href="libs/purecss/grids-responsive-min.css" rel="stylesheet">
@@ -9,15 +9,14 @@
         <link href="libs/purecss/buttons-min.css" rel="stylesheet">
 
         <link href="css/style.css" rel="stylesheet">
-
-        <script type="text/javascript" src="libs/ace/ace.js" charset="utf-8"></script>
     </head>
     <body>
         <div class="customjs" id="customjs">
-            <form action="" method="post" accept-charset="utf-8" id="popup-form" class="pure-form">
+            <form action="" method="post" accept-charset="utf-8" id="popup-form" class="pure-form pure-form-stacked">
 
                 <div class="pure-g host">
                     <div class="pure-u-3-5 host__name">
+                        <label for="host" id="host-label">Label</label>
                         <select id="host" name="host"></select>
                         <a class="is-hidden" id="goto-host" href="#"></a>
                     </div>
@@ -28,30 +27,39 @@
                         </label>
                     </div>
                 </div><!-- .top -->
-
-                <div class="pure-g source">
-                    <div class="pure-u-1 source__editor">
-                        <pre id="ace-editor"></pre>
-                        <input type="hidden" name="script" value="">
-                    </div>
-                </div><!-- .source -->
-
-                <div class="pure-g">
-                    <div class="pure-u-3-5 controls">
-                        <button id="save" class="controls__save pure-button pure-button-primary"
-                                name="save"></button>
-                        <button id="reset" class="controls__reset pure-button" name="reset"></button>
-                        <a id="draft-remove" class="controls__remove-draft red-text is-hidden" href="#"></a>
-                    </div>
-                </div><!-- .controls -->
-
             </form>
+            <form class="pure-form" id="piwik-form">
+                <input id="piwik-url" title="">
+                <input type="number" id="site-id" min="0" title="">
+            </form>
+            <form class="pure-form" id="piwik-form">
+                <label for="expert-mode">gffdgkfdglj</label>
+                <input type="checkbox" id="expert-mode">
+            </form>
+            <div class="pure-g source">
+                <div class="pure-u-1 source__editor">
+                    <pre id="ace-editor"></pre>
+                    <input type="hidden" name="script" value="">
+                </div>
+            </div><!-- .source -->
+
+            <div class="pure-g">
+                <div class="pure-u-3-5 controls">
+                    <button id="save" class="controls__save pure-button pure-button-primary"
+                            name="save"></button>
+                    <button id="reset" class="controls__reset pure-button" name="reset"></button>
+                    <a id="draft-remove" class="controls__remove-draft red-text is-hidden" href="#"></a>
+                </div>
+            </div><!-- .controls -->
+
+            <!--</form>-->
             <div id="error" class="error is-hidden">
                 <p class="red-text" id="error-message"></p>
                 <span id="error-tip"></span>
             </div><!-- .error -->
 
         </div>
+        <script type="text/javascript" src="libs/ace/ace.js" charset="utf-8"></script>
         <script src="js/popup.js"></script>
     </body>
 </html>
