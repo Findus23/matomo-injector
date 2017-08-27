@@ -60,106 +60,6 @@ document.addEventListener('DOMContentLoaded', function() {
         editor.gotoLine(1);
       }
     },
-    storage: {
-      data: {
-        private: {},
-        global: {}
-      },
-      MODE: {
-        private: 1,
-        global: 2
-      },
-      setMode: function(mode) {
-        if (mode === this.MODE.private) {
-          this.key = popup.key + "-" + popup.protocol + "//" + popup.host;
-          this.mode = this.MODE.private;
-        }
-
-        if (mode === this.MODE.global) {
-          this.key = popup.key;
-          this.mode = this.MODE.global;
-        }
-      },
-      load: function() {
-        this.setMode(this.MODE.private);
-        this._setData(JSON.parse(localStorage.getItem(this.key) || "{}"));
-
-        this.setMode(this.MODE.global);
-        this._setData(JSON.parse(localStorage.getItem(this.key) || "{}"));
-      },
-      _getData: function(key) {
-        var storage = popup.storage;
-        if (storage.mode === storage.MODE.private) {
-          if (key) {
-            return storage.data.private[key];
-          }
-          else {
-            return storage.data.private;
-          }
-        }
-        if (storage.mode === storage.MODE.global) {
-          if (key) {
-            return storage.data.global[key];
-          }
-          else {
-            return storage.data.global;
-          }
-        }
-      },
-      _setData: function(data, key) {
-        var storage = popup.storage;
-        if (storage.mode === storage.MODE.private) {
-          if (key) {
-            storage.data.private[key] = data;
-          }
-          else {
-            storage.data.private = data;
-          }
-        }
-        if (storage.mode === storage.MODE.global) {
-          if (key) {
-            storage.data.global[key] = data;
-          }
-          else {
-            storage.data.global = data;
-          }
-        }
-      },
-      get: function(key) {
-        return this._getData(key);
-      },
-      set: function(arg1, arg2) {
-        // arg1 is a key
-        if (typeof arg1 === 'string') {
-          this._setData(arg2, arg1);
-        }
-        // arg1 is data
-        else {
-          this._setData(arg1);
-        }
-
-        var str = JSON.stringify(this._getData() || {});
-        localStorage.setItem(this.key, str);
-      },
-      remove: function(key) {
-        if (key) {
-          var data = this._getData();
-          delete data[key];
-
-          if (Object.keys(data).length === 0) {
-            this.remove();
-          }
-          else {
-            var str = JSON.stringify(this._getData());
-            localStorage.setItem(this.key, str);
-          }
-        }
-        else {
-          localStorage.removeItem(this.key);
-          this._setData({});
-        }
-      }
-    },
     apiclb: {
       onSelectedTab: function(tabs) {
         popup.tabId = tabs[0].id;
@@ -380,12 +280,6 @@ document.addEventListener('DOMContentLoaded', function() {
       }
 
       if (confirm(chrome.i18n.getMessage("delete_warning"))) {
-        // Remove stored data for current host
-        popup.storage.setMode(popup.storage.MODE.private);
-        popup.storage.remove();
-
-        // Remove host from hosts inside global storage
-        popup.storage.setMode(popup.storage.MODE.global);
 
         chrome.storage.sync.get("hosts", function(items) {
               var hosts = items.hosts;
@@ -397,8 +291,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         );
 
-        // Remove customjs from frontend
-        chrome.tabs.sendMessage(popup.tabId, {method: "removeData", reload: false});
+        chrome.storage.sync.remove(popup.url);
 
         // Set-up empty data
         popup.data = Object.assign(true, {}, popup.emptyDataPattern);
