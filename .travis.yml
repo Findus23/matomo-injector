@@ -7,4 +7,4 @@ before_script:
   - npm install -g web-ext
 script:
   - jshint js/
-  - web-ext lint --ignore-files "libs/*" "*.sh"
+  - web-ext lint --ignore-files --warnings-as-errors "libs/*" "*.sh"
