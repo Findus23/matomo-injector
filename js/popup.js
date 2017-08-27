@@ -14,7 +14,8 @@ document.addEventListener('DOMContentLoaded', function() {
       error: document.getElementById("error"),
       piwikForm: document.getElementById("piwik-form"),
       piwikURL: document.getElementById("piwik-url"),
-      siteID: document.getElementById("site-id")
+      siteID: document.getElementById("site-id"),
+      expertMode: document.getElementById("expert-mode")
     },
     applyi18n: function() {
       var translatableIDs = ["error-message", "error-tip", "save", "reset", "goto-host", "enable-description", "host-label"];
@@ -32,6 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
       document.title = chrome.i18n.getMessage("extention_name")
     },
     host: undefined,
+    url: undefined,
     emptyDataPattern: {
       config: {
         enable: false,
@@ -51,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // editor.setHighlightActiveLine(false);
         editor.getSession().on('change', this.onChange);
         editor.$blockScrolling = Infinity;
-        // editor.setReadOnly(true)
+        editor.setReadOnly(true)
       },
       apply: function(source) {
         var editor = this.editorInstance;
@@ -178,6 +180,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         popup.host = response.host;
         popup.protocol = response.protocol;
+        popup.key = popup.protocol + "//" + popup.host;
 
         // Load storage (global, local) IMPORTANT: Must be called first of all storage operations
         popup.storage.load();
@@ -266,6 +269,22 @@ document.addEventListener('DOMContentLoaded', function() {
         js = js.replace("{{PIWIKURL}}", piwikURL);
         js = js.replace("{{SITEID}}", String(siteID));
         popup.editor.apply(js)
+      },
+      setExpertMode: function(expertMode, onLoad) {
+        console.warn(expertMode);
+        popup.editor.editorInstance.setReadOnly(!expertMode);
+        popup.el.piwikForm.querySelectorAll("input").forEach(function(input) {
+          input.disabled = expertMode;
+        });
+        popup.el.expertMode.checked = expertMode;
+        if (!onLoad) {
+          chrome.storage.sync.set({"expertMode": expertMode});
+        }
+      },
+      loadExpertMode: function() {
+        chrome.storage.sync.get("expertMode", function(items) {
+          popup.piwik.setExpertMode(items.expertMode);
+        });
       }
     },
     generateScriptDataUrl: function(script) {
@@ -525,6 +544,13 @@ document.addEventListener('DOMContentLoaded', function() {
    */
 
   popup.el.draftRemoveLink.addEventListener('click', popup.removeDraft);
+
+  popup.piwik.loadExpertMode();
+
+  popup.el.expertMode.addEventListener("change", function() {
+    var enabled = event.target.checked;
+    popup.piwik.setExpertMode(enabled)
+  });
 
 
 }, false);
