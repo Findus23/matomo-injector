@@ -1,4 +1,8 @@
 {
+  "extention_name": {
+    "message": "Piwik Injector",
+    "description": "name of the extention"
+  },
   "extention_description": {
     "message": "Füge eigenes Javascript auf beliebigen Seiten ein.",
     "description": "a short description shown in the extention list"

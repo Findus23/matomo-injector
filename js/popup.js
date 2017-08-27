@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
       expertMode: document.getElementById("expert-mode")
     },
     applyi18n: function() {
-      var translatableIDs = ["error-message", "error-tip", "save", "reset", "goto-host", "enable-description", "host-label", "expert-mode-label"];
+      var translatableIDs = ["error-message", "error-tip", "save", "reset", "goto-host", "enable-description", "host-label", "expert-mode-label", "draft-remove"];
       translatableIDs.forEach(function(id) {
         var translateKey = id.replace(/-/g, "_");
         document.getElementById(id).innerText = chrome.i18n.getMessage(translateKey);
@@ -36,8 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
     url: undefined,
     emptyDataPattern: {
       config: {
-        enable: false,
-        extra: ''
+        enable: false
       },
       source: ''
     },
@@ -180,7 +179,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         popup.host = response.host;
         popup.protocol = response.protocol;
-        popup.key = popup.protocol + "//" + popup.host;
+        popup.url = popup.protocol + "//" + popup.host;
 
         // Load storage (global, local) IMPORTANT: Must be called first of all storage operations
         popup.storage.load();
@@ -188,29 +187,31 @@ document.addEventListener('DOMContentLoaded', function() {
         // Set storage to store data accessible from all hosts
         popup.storage.setMode(popup.storage.MODE.global);
 
-        var hosts = popup.storage.get('hosts') || [],
-            url = popup.protocol + "//" + response.host;
+        chrome.storage.sync.get("hosts", function(items) {
+              var hosts = items.hosts;
+              if (!hosts) {
+                hosts = [];
+              }
+              // Add current host to list
+              if (hosts.indexOf(popup.url) === -1) {
+                hosts.push(popup.url);
+              }
+              // Fill 'hosts select'
+              hosts.forEach(function(host) {
+                var option = document.createElement('option');
+                option.innerText = host;
+                if (host === popup.url) {
+                  option.setAttribute('selected', 'selected');
+                }
+                popup.el.hostSelect.appendChild(option);
+              });
 
-        // Add current host to list
-        if (hosts.indexOf(url) === -1) {
-          hosts.push(url);
-        }
-
-        // Fill 'hosts select'
-        hosts.forEach(function(host) {
-          var option = document.createElement('option');
-          option.innerText = host;
-          if (host === url) {
-            option.setAttribute('selected', 'selected');
-          }
-          popup.el.hostSelect.appendChild(option);
-        });
-
-        // Store host (current included in array) if customjs is defined
-        if (response.customjs) {
-          popup.storage.set('hosts', hosts);
-        }
-
+              // Store host (current included in array) if customjs is defined
+              if (response.customjs) {
+                chrome.storage.sync.set({"hosts": hosts});
+              }
+            }
+        );
         /**
          * Set-up data (script, enable, include, extra)
          */
@@ -242,7 +243,11 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         // Apply data (draft if exist)
-        popup.applyData(popup.storage.get('draft'));
+        chrome.storage.local.get(popup.url, function(items) {
+          if (items && Object.keys(items).length !== 0) { // if draft exists
+            popup.applyData(items[popup.url].draft);
+          }
+        });
       }
     },
 
@@ -267,7 +272,8 @@ document.addEventListener('DOMContentLoaded', function() {
         var js = popup.piwik.defaultTrackingCode;
         js = js.replace("{{PIWIKURL}}", piwikURL);
         js = js.replace("{{SITEID}}", String(siteID));
-        popup.editor.apply(js)
+        popup.editor.apply(js);
+        chrome.storage.sync.set({"piwik": {piwikURL: piwikURL, siteID: siteID}});
       },
       setExpertMode: function(expertMode, onLoad) {
         popup.editor.editorInstance.setOptions({
@@ -295,6 +301,7 @@ document.addEventListener('DOMContentLoaded', function() {
       // base64 may be smaller, but does not handle unicode characters
       // attempt base64 first, fall back to escaped text
       try {
+        throw new Error;
         b64 += (';base64,' + btoa(script));
       }
       catch (e) {
@@ -302,6 +309,18 @@ document.addEventListener('DOMContentLoaded', function() {
       }
 
       return b64;
+    },
+    decodeDataUrl: function(dataUrl) {
+      if (dataUrl.indexOf('data:text/javascript;base64,') === 0) {
+        dataUrl = dataUrl.replace('data:text/javascript;base64,', '');
+        return atob(dataUrl);
+      }
+      else if (dataUrl.indexOf('data:text/javascript;charset=utf-8,') === 0) {
+        dataUrl = dataUrl.replace('data:text/javascript;charset=utf-8,', '');
+        return decodeURIComponent(dataUrl);
+      } else {
+        return dataUrl
+      }
     },
     applyData: function(data, notDraft) {
 
@@ -311,6 +330,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
       data = data || this.data;
       // Default value for source
+
+      data.source = popup.decodeDataUrl(data.source);
+      console.info(data);
       if (!data.source) {
         data.source = popup.editor.defaultValue;
       }
@@ -350,11 +372,11 @@ document.addEventListener('DOMContentLoaded', function() {
       data.source = popup.generateScriptDataUrl(data.source);
 
       // Send new data to apply
-      chrome.tabs.sendMessage(popup.tabId, {method: "setData", customjs: data, reload: true});
+      // chrome.tabs.sendMessage(popup.tabId, {method: "setData", customjs: data, reload: true});
 
-      // Save local copy of data
-      popup.storage.setMode(popup.storage.MODE.private);
-      popup.storage.set('data', popup.data);
+      var syncdata = {};
+      syncdata[popup.url] = data;
+      chrome.storage.sync.set(syncdata);
 
       // Clear draft
       popup.removeDraft();
@@ -379,14 +401,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Remove host from hosts inside global storage
         popup.storage.setMode(popup.storage.MODE.global);
-        var oldHosts = popup.storage.get('hosts'),
-            newHosts = [];
-        oldHosts.forEach(function(host) {
-          if (host !== popup.protocol + '//' + popup.host) {
-            newHosts.push(host);
-          }
-        });
-        popup.storage.set('hosts', newHosts);
+
+        chrome.storage.sync.get("hosts", function(items) {
+              var hosts = items.hosts;
+              var index = hosts.indexOf(popup.url);
+              if (index > -1) {
+                hosts.splice(index, 1);
+              }
+              chrome.storage.sync.set({"hosts": hosts});
+            }
+        );
 
         // Remove customjs from frontend
         chrome.tabs.sendMessage(popup.tabId, {method: "removeData", reload: false});
@@ -460,8 +484,10 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         if ((source || !popup.data.source) && source !== popup.data.source) {
 
-          popup.storage.setMode(popup.storage.MODE.private);
-          popup.storage.set('draft', draft);
+          var data = {};
+          data[popup.url] = {draft: draft};
+          popup.el.draftRemoveLink.classList.remove('is-hidden');
+          chrome.storage.local.set(data);
 
           // Auto switch 'enable checkbox' on source edit
           if (!popup.el.enableCheck.classList.contains('not-auto-change')) {
@@ -469,7 +495,7 @@ document.addEventListener('DOMContentLoaded', function() {
           }
         }
       },
-      draftAutoSaveInterval = setInterval(draftAutoSave, 2000);
+      draftAutoSaveInterval = setInterval(draftAutoSave, 1000);
 
 
   /**
@@ -477,48 +503,52 @@ document.addEventListener('DOMContentLoaded', function() {
    */
 
   popup.el.hostSelect.addEventListener('change', function(e) {
-    var host = this.value,
-        hostData = JSON.parse(localStorage.getItem(popup.key + '-' + host), true);
+    var host = this.value;
+    chrome.storage.sync.get(host, function(items) {
+      var hostData = items[host];
+      console.info(hostData);
+      console.log(host);
+      if (host !== popup.url) {
+        // Stop making drafts
+        clearInterval(draftAutoSaveInterval);
 
+        // Show goto link
+        popup.el.hostGoToLink.classList.remove('is-hidden');
 
-    if (host !== popup.protocol + '//' + popup.host) {
-      // Stop making drafts
-      clearInterval(draftAutoSaveInterval);
+        // Hide controls
+        popup.el.saveBtn.classList.add('pure-button-disabled');
+        popup.el.resetBtn.classList.add('pure-button-disabled');
+        popup.el.draftRemoveLink.classList.add('is-hidden');
 
-      // Show goto link
-      popup.el.hostGoToLink.classList.remove('is-hidden');
-
-      // Hide controls
-      popup.el.saveBtn.classList.add('pure-button-disabled');
-      popup.el.resetBtn.classList.add('pure-button-disabled');
-      popup.el.draftRemoveLink.classList.add('is-hidden');
-
-      // Apply other host data
-      try {
-        popup.applyData(hostData.data, true);
+        // Apply other host data
+        try {
+          popup.applyData(hostData, true);
+        }
+            // Hotfix for host without customjs
+        catch (err) {
+          popup.applyData(Object.assign(true, {}, popup.emptyDataPattern), true);
+        }
       }
-          // Hotfix for host without customjs
-      catch (err) {
-        popup.applyData(Object.assign(true, {}, popup.emptyDataPattern), true);
+      else {
+        // Start making drafts
+        draftAutoSaveInterval = setInterval(draftAutoSave, 1000);
+
+        // Hide goto link
+        popup.el.hostGoToLink.classList.add('is-hidden');
+
+        // Show controls
+        popup.el.saveBtn.classList.remove('pure-button-disabled');
+        popup.el.resetBtn.classList.remove('pure-button-disabled');
+        if (popup.storage.get('draft')) {
+          popup.el.draftRemoveLink.classList.remove('is-hidden');
+        }
+
+        // Apply current host data
+        // popup.applyData(hostData.draft || hostData.data, !hostData.draft);
+        popup.applyData(hostData);
       }
-    }
-    else {
-      // Start making drafts
-      draftAutoSaveInterval = setInterval(draftAutoSave, 2000);
+    });
 
-      // Hide goto link
-      popup.el.hostGoToLink.classList.add('is-hidden');
-
-      // Show controls
-      popup.el.saveBtn.classList.remove('pure-button-disabled');
-      popup.el.resetBtn.classList.remove('pure-button-disabled');
-      if (popup.storage.get('draft')) {
-        popup.el.draftRemoveLink.classList.remove('is-hidden');
-      }
-
-      // Apply current host data
-      popup.applyData(hostData.draft || hostData.data, !hostData.draft);
-    }
   });
 
 
@@ -550,9 +580,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
   popup.piwik.loadExpertMode();
 
-  popup.el.expertMode.addEventListener("change", function() {
+  popup.el.expertMode.addEventListener("change", function(event) {
     var enabled = event.target.checked;
     popup.piwik.setExpertMode(enabled)
+  });
+
+  chrome.storage.sync.get("piwik", function(items) {
+    if (items && Object.keys(items).length !== 0) {
+      popup.el.piwikURL.value = items.items.piwikURL;
+      popup.el.siteID.value = items.piwik.siteID;
+    }
   });
 
 

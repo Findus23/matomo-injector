@@ -107,9 +107,14 @@ a:hover {
 }
 
 .controls__save,
-.controls__reset {
+.controls__reset,
+.controls__remove-draft {
   margin-right: 10px;
-  font-size: 18px;
+  font-size: 16px;
+}
+
+.button-warning {
+  background: rgb(223, 117, 20);
 }
 
 #editor {
