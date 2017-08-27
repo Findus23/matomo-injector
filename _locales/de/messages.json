@@ -1,0 +1,62 @@
+{
+  "extention_description": {
+    "message": "Füge eigenes Javascript auf beliebigen Seiten ein.",
+    "description": "a short description shown in the extention list"
+  },
+  "host_title": {
+    "message": "Webseiten mit benutzerdefiniertem Javascript",
+    "description": "title-text of host selection dropdown"
+  },
+  "save": {
+    "message": "speichern",
+    "description": "save-button text"
+  },
+  "save_title": {
+    "message": "Änderungen speichern und anwenden",
+    "description": "title text of save button"
+  },
+  "reset": {
+    "message": "zurücksetzen",
+    "description": "reset-button text"
+  },
+  "reset_title": {
+    "message": "",
+    "description": "title text of reset button"
+  },
+  "placeholder_javascript": {
+    "message": "// Hier kannst du dein eigenes Javascript einfügen...",
+    "description": "placeholder for javascript editor (needs to be a valid comment)"
+  },
+  "delete_warning": {
+    "message": "Möchtest du wirklich alle Daten für diesen Host löschen?",
+    "description": "confirmation message when deleting the js for a host"
+  },
+  "error_message": {
+    "message": "Anscheinend kann diese Seite nicht verändert werden",
+    "description": "warning when injection fails"
+  },
+  "error_tip": {
+    "message": "ein Neuladen der Seite kann das möglicherweise beheben",
+    "description": "additional tip when injection fails"
+  },
+  "draft_remove": {
+    "message": "Entwurf löschen",
+    "description": "buttontext"
+  },
+  "draft_remove_title": {
+    "message": "",
+    "description": "title text of draft remove button"
+  },
+  "goto_host": {
+    "message": "öffnen",
+    "description": "when a host that is currently not opened, a button apears for opening this host in the current tab"
+  },
+  "goto_host_title": {
+    "message": "die ausgewählte Webseite öffnen",
+    "description": "message if a currently not opened webpage is opened"
+  },
+  "enable_description": {
+    "message": "?? für diese Webseite aktivieren",
+    "description": "label for checkbox"
+  }
+}
