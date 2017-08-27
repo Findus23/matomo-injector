@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
         var translateKey = id.replace(/-/g, "_");
         document.getElementById(id).innerText = chrome.i18n.getMessage(translateKey);
       });
-      var translatableTitles = ["host", "goto_host", "save", "reset", "draft_remove", "piwik_url", "site_id"];
+      var translatableTitles = ["host", "goto-host", "save", "reset", "draft-remove", "piwik-url", "site-id"];
       translatableTitles.forEach(function(id) {
         var translateKey = id.replace("-", "_") + "_title";
         document.getElementById(id).setAttribute('title', chrome.i18n.getMessage(translateKey));
@@ -77,7 +77,6 @@ document.addEventListener('DOMContentLoaded', function() {
         /**
          * Create 'hosts select'
          */
-        console.warn(items);
 
 
         chrome.storage.sync.get("hosts", function(items) {
@@ -220,7 +219,6 @@ document.addEventListener('DOMContentLoaded', function() {
       // Default value for source
 
       data.source = popup.decodeDataUrl(data.source);
-      console.info(data);
       if (!data.source) {
         data.source = popup.editor.defaultValue;
       }
