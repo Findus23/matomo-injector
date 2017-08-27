@@ -207,7 +207,7 @@ document.addEventListener('DOMContentLoaded', function() {
         dataUrl = dataUrl.replace('data:text/javascript;charset=utf-8,', '');
         return decodeURIComponent(dataUrl);
       } else {
-        return dataUrl
+        return dataUrl;
       }
     },
     applyData: function(data, notDraft) {
@@ -345,7 +345,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
   popup.el.piwikForm.querySelectorAll("input").forEach(function(input) {
-    input.addEventListener("change", popup.piwik.handleTrackingCode)
+    input.addEventListener("change", popup.piwik.handleTrackingCode);
   });
 
   /**
@@ -459,7 +459,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   popup.el.expertMode.addEventListener("change", function(event) {
     var enabled = event.target.checked;
-    popup.piwik.setExpertMode(enabled)
+    popup.piwik.setExpertMode(enabled);
   });
 
   chrome.storage.sync.get("piwik", function(items) {
