@@ -18,9 +18,9 @@ document.addEventListener('DOMContentLoaded', function() {
       expertMode: document.getElementById("expert-mode")
     },
     applyi18n: function() {
-      var translatableIDs = ["error-message", "error-tip", "save", "reset", "goto-host", "enable-description", "host-label"];
+      var translatableIDs = ["error-message", "error-tip", "save", "reset", "goto-host", "enable-description", "host-label", "expert-mode-label"];
       translatableIDs.forEach(function(id) {
-        var translateKey = id.replace("-", "_");
+        var translateKey = id.replace(/-/g, "_");
         document.getElementById(id).innerText = chrome.i18n.getMessage(translateKey);
       });
       var translatableTitles = ["host", "goto_host", "save", "reset", "draft_remove", "piwik_url", "site_id"];
@@ -264,15 +264,18 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!siteID || !piwikURL) {
           return false;
         }
-        console.warn(piwikURL, siteID);
         var js = popup.piwik.defaultTrackingCode;
         js = js.replace("{{PIWIKURL}}", piwikURL);
         js = js.replace("{{SITEID}}", String(siteID));
         popup.editor.apply(js)
       },
       setExpertMode: function(expertMode, onLoad) {
-        console.warn(expertMode);
-        popup.editor.editorInstance.setReadOnly(!expertMode);
+        popup.editor.editorInstance.setOptions({
+          readOnly: !expertMode,
+          highlightActiveLine: expertMode,
+          highlightGutterLine: expertMode
+        });
+        popup.editor.editorInstance.container.style.backgroundColor = expertMode ? "white" : "#eaeded";
         popup.el.piwikForm.querySelectorAll("input").forEach(function(input) {
           input.disabled = expertMode;
         });

@@ -82,5 +82,9 @@
   "site_id_placeholder": {
     "message": "site ID",
     "description": "placeholder text of site ID input"
+  },
+  "expert_mode_label": {
+    "message": "Expert mode",
+    "description": "label of expert mode checkbox"
   }
 }

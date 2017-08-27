@@ -4,7 +4,7 @@
         <title></title>
 
         <link href="libs/purecss/base-min.css" rel="stylesheet">
-        <link href="libs/purecss/grids-responsive-min.css" rel="stylesheet">
+        <link href="libs/purecss/grids-min.css" rel="stylesheet">
         <link href="libs/purecss/forms-nr-min.css" rel="stylesheet">
         <link href="libs/purecss/buttons-min.css" rel="stylesheet">
 
@@ -32,16 +32,14 @@
                 <input id="piwik-url" title="">
                 <input type="number" id="site-id" min="0" title="">
             </form>
-            <form class="pure-form" id="piwik-form">
-                <label for="expert-mode">gffdgkfdglj</label>
+            <form class="pure-form">
+                <label for="expert-mode" id="expert-mode-label"></label>
                 <input type="checkbox" id="expert-mode">
             </form>
-            <div class="pure-g source">
-                <div class="pure-u-1 source__editor">
-                    <pre id="ace-editor"></pre>
-                    <input type="hidden" name="script" value="">
-                </div>
-            </div><!-- .source -->
+            <div class="source__editor">
+                <pre id="ace-editor"></pre>
+                <input type="hidden" name="script" value="">
+            </div>
 
             <div class="pure-g">
                 <div class="pure-u-3-5 controls">
