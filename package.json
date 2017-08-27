@@ -9,7 +9,8 @@
   },
   "devDependencies": {},
   "scripts": {
-    "copy": "bash copy.sh"
+    "copy": "bash copy.sh",
+    "build": "web-ext build --ignore-files '**/*.sh'"
   },
   "repository": {
     "type": "git",
