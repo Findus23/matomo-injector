@@ -63,23 +63,23 @@ document.addEventListener('DOMContentLoaded', function() {
     apiclb: {
       onSelectedTab: function(tabs) {
         popup.tabId = tabs[0].id;
-        chrome.tabs.sendMessage(popup.tabId, {method: "getData", reload: false}, popup.apiclb.onGetData);
+        var url = new URL(tabs[0].url);
+        popup.host = url.host;
+        popup.protocol = url.protocol;
+        popup.url = popup.protocol + "//" + popup.host;
+        // chrome.tabs.sendMessage(popup.tabId, {method: "getData", reload: false}, popup.apiclb.onGetData);
+        chrome.storage.sync.get(popup.url, popup.apiclb.onGetData)
       },
-      onGetData: function(response) {
+      onGetData: function(items) {
         // console.warn(response);
         // console.info(chrome.runtime.lastError);
-        if (!response || typeof response.host !== 'string') {
-          popup.error();
-          return;
-        }
+        var response = items[popup.url];
 
         /**
          * Create 'hosts select'
          */
+        console.warn(items);
 
-        popup.host = response.host;
-        popup.protocol = response.protocol;
-        popup.url = popup.protocol + "//" + popup.host;
 
         chrome.storage.sync.get("hosts", function(items) {
               var hosts = items.hosts;
@@ -98,12 +98,10 @@ document.addEventListener('DOMContentLoaded', function() {
                   option.setAttribute('selected', 'selected');
                 }
                 popup.el.hostSelect.appendChild(option);
+                if (!response || typeof response.host !== 'string') {
+                  chrome.storage.sync.set({"hosts": hosts});
+                }
               });
-
-              // Store host (current included in array) if customjs is defined
-              if (response.customjs) {
-                chrome.storage.sync.set({"hosts": hosts});
-              }
             }
         );
         /**
@@ -112,11 +110,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Set-up data pattern if empty
         if (!popup.data) {
-          popup.data = Object.assign(true, {}, popup.emptyDataPattern);
+          popup.data = Object.assign({}, popup.emptyDataPattern);
         }
 
         // Merge host's data to defaults
-        popup.data = Object.assign(popup.data, response.customjs);
+        popup.data = Object.assign(popup.data, response);
 
         // ... source is now encoded as base64
         if (popup.data.source.indexOf('data:text/javascript;base64,') === 0) {
@@ -127,6 +125,8 @@ document.addEventListener('DOMContentLoaded', function() {
           popup.data.source = popup.data.source.replace('data:text/javascript;charset=utf-8,', '');
           popup.data.source = decodeURIComponent(popup.data.source);
         }
+
+        popup.piwik.loadExpertMode();
 
         // Apply data (draft if exist)
         chrome.storage.local.get(popup.url, function(items) {
@@ -175,13 +175,15 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         popup.el.expertMode.checked = expertMode;
         if (!onLoad) {
-          chrome.storage.sync.set({"expertMode": expertMode});
+          popup.data.expertMode = expertMode;
+          var data = {};
+          data[popup.url] = popup.data;
+          chrome.storage.sync.set(data);
         }
       },
       loadExpertMode: function() {
-        chrome.storage.sync.get("expertMode", function(items) {
-          popup.piwik.setExpertMode(items.expertMode);
-        });
+        var expertMode = (typeof popup.data.expertMode === "undefined") ? false : popup.data.expertMode;
+        popup.piwik.setExpertMode(expertMode);
       }
     },
     generateScriptDataUrl: function(script) {
@@ -256,15 +258,14 @@ document.addEventListener('DOMContentLoaded', function() {
       // Transform source for correct apply
       data.source = popup.generateScriptDataUrl(data.source);
 
-      // Send new data to apply
-      // chrome.tabs.sendMessage(popup.tabId, {method: "setData", customjs: data, reload: true});
-
       var syncdata = {};
       syncdata[popup.url] = data;
       chrome.storage.sync.set(syncdata);
 
       // Clear draft
       popup.removeDraft();
+
+      chrome.tabs.reload(popup.tabId);
 
       // Close popup
       window.close();
@@ -322,7 +323,7 @@ document.addEventListener('DOMContentLoaded', function() {
    */
   popup.el.hostGoToLink.addEventListener('click', function() {
     var link = popup.el.hostSelect.value;
-    chrome.tabs.sendMessage(popup.tabId, {method: "goTo", link: link, reload: false});
+    chrome.tabs.update(popup.tabId, {url: link});
     window.close();
   });
 
@@ -456,8 +457,6 @@ document.addEventListener('DOMContentLoaded', function() {
    */
 
   popup.el.draftRemoveLink.addEventListener('click', popup.removeDraft);
-
-  popup.piwik.loadExpertMode();
 
   popup.el.expertMode.addEventListener("change", function(event) {
     var enabled = event.target.checked;
