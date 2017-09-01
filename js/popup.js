@@ -150,7 +150,7 @@ document.addEventListener('DOMContentLoaded', function() {
       handleTrackingCode: function() {
         var piwikURL = encodeURI(popup.el.piwikURL.value);
         if (!piwikURL.endsWith("/")) {
-          piwikURL += "/"
+          piwikURL += "/";
         }
         var siteID = parseInt(popup.el.siteID.value, 10);
         if (!siteID || !piwikURL) {
