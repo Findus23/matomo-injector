@@ -4,8 +4,32 @@
     "description": "name of the extention"
   },
   "extention_description": {
-    "message": "Run custom JavaScript on any website.",
-    "description": "a short description shown in the extention list"
+    "message": "Try out Piwik, the open source, privacy aware web analytics software, without the need to modify anything.",
+    "description": "a short description shown in the extention list; should be pretty short, but descriptive"
+  },
+  "extention_firefox_description": {
+    "message": "piwik, analytics, javascript, debugging",
+    "description": "longer description text for firefox extention page; can use HTML to stucture the content"
+  },
+  "extention_chrome_description": {
+    "message": "piwik, analytics, javascript, debugging",
+    "description": "longer description text for chrome extention page; can't use any formatting"
+  },
+  "extention_tags": {
+    "message": "piwik, analytics, javascript, debugging, injecting, open source,",
+    "description": "tags for Firefox addon description (maximum 20)"
+  },
+  "extention_screenshot_1": {
+    "message": "Add the piwik tracking code to every website without access to the website source",
+    "description": "description for the first screenshot (https://github.com/Findus23/piwik-injector/blob/master/docs/screenshot_firefox_1.png)"
+  },
+  "extention_screenshot_2": {
+    "message": "",
+    "description": "description for  the second screenshot (https://github.com/Findus23/piwik-injector/blob/master/docs/screenshot_firefox_2.png)"
+  },
+  "extention_screenshot_3": {
+    "message": "",
+    "description": "description for the third screenshot (https://github.com/Findus23/piwik-injector/blob/master/docs/screenshot_firefox_3.png)"
   },
   "host_label": {
     "message": "hosts",
@@ -64,7 +88,7 @@
     "description": "message if a currently not opened webpage is opened"
   },
   "enable_description": {
-    "message": "enable injection for this host",
+    "message": "enable",
     "description": "label for checkbox"
   },
   "piwik_url_title": {

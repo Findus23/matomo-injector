@@ -60,7 +60,7 @@
     "description": "message if a currently not opened webpage is opened"
   },
   "enable_description": {
-    "message": "?? für diese Webseite aktivieren",
+    "message": "aktivieren",
     "description": "label for checkbox"
   }
 }

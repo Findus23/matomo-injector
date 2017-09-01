@@ -62,7 +62,7 @@ a:hover {
 }
 
 .host__name select {
-  min-width: 220px;
+  min-width: 230px;
 }
 
 .host__name a {
@@ -72,13 +72,14 @@ a:hover {
 
 .host__enable {
   text-align: right;
-  line-height: 34px;
 }
 
-.host__enable input {
-  position: relative;
-  bottom: -2px;
-  margin-left: 2px;
+input[type=checkbox] {
+  vertical-align: middle;
+}
+
+label span {
+  vertical-align: middle;
 }
 
 /**
@@ -94,7 +95,7 @@ a:hover {
 
 .source__editor pre {
   margin: 0;
-  min-height: 200px;
+  min-height: 220px;
   width: 100%;
   line-height: 150%;
 }
@@ -104,6 +105,7 @@ a:hover {
  */
 
 .controls {
+  margin-top: 1rem;
 }
 
 .controls__save,
@@ -117,6 +119,6 @@ a:hover {
   background: rgb(223, 117, 20);
 }
 
-#editor {
+#ace-editor {
   font-family: monospace
 }

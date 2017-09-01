@@ -114,17 +114,15 @@ document.addEventListener('DOMContentLoaded', function() {
         // Merge host's data to defaults
         popup.data = Object.assign(popup.data, response);
 
-        // ... source is now encoded as base64
-        if (popup.data.source.indexOf('data:text/javascript;base64,') === 0) {
-          popup.data.source = popup.data.source.replace('data:text/javascript;base64,', '');
-          popup.data.source = atob(popup.data.source);
-        }
-        else if (popup.data.source.indexOf('data:text/javascript;charset=utf-8,') === 0) {
-          popup.data.source = popup.data.source.replace('data:text/javascript;charset=utf-8,', '');
-          popup.data.source = decodeURIComponent(popup.data.source);
+        popup.piwik.loadExpertMode();
+        console.warn("HALLO");
+        if (popup.data.piwik) {
+          popup.el.piwikURL.value = popup.data.piwik.piwikURL;
+          popup.el.siteID.value = popup.data.piwik.siteID;
         }
 
-        popup.piwik.loadExpertMode();
+        popup.data.originalSource = popup.data.source;
+
 
         // Apply data (draft if exist)
         chrome.storage.local.get(popup.url, function(items) {
@@ -151,6 +149,9 @@ document.addEventListener('DOMContentLoaded', function() {
       "})();",
       handleTrackingCode: function() {
         var piwikURL = encodeURI(popup.el.piwikURL.value);
+        if (!piwikURL.endsWith("/")) {
+          piwikURL += "/"
+        }
         var siteID = parseInt(popup.el.siteID.value, 10);
         if (!siteID || !piwikURL) {
           return false;
@@ -159,7 +160,7 @@ document.addEventListener('DOMContentLoaded', function() {
         js = js.replace("{{PIWIKURL}}", piwikURL);
         js = js.replace("{{SITEID}}", String(siteID));
         popup.editor.apply(js);
-        chrome.storage.sync.set({"piwik": {piwikURL: piwikURL, siteID: siteID}});
+        popup.data.piwik = {piwikURL: piwikURL, siteID: siteID};
       },
       setExpertMode: function(expertMode, onLoad) {
         popup.editor.editorInstance.setOptions({
@@ -184,62 +185,37 @@ document.addEventListener('DOMContentLoaded', function() {
         popup.piwik.setExpertMode(expertMode);
       }
     },
-    generateScriptDataUrl: function(script) {
-      var b64 = 'data:text/javascript';
-      // base64 may be smaller, but does not handle unicode characters
-      // attempt base64 first, fall back to escaped text
-      try {
-        b64 += (';base64,' + btoa(script));
-      }
-      catch (e) {
-        b64 += (';charset=utf-8,' + encodeURIComponent(script));
-      }
-
-      return b64;
-    },
-    decodeDataUrl: function(dataUrl) {
-      if (dataUrl.indexOf('data:text/javascript;base64,') === 0) {
-        dataUrl = dataUrl.replace('data:text/javascript;base64,', '');
-        return atob(dataUrl);
-      }
-      else if (dataUrl.indexOf('data:text/javascript;charset=utf-8,') === 0) {
-        dataUrl = dataUrl.replace('data:text/javascript;charset=utf-8,', '');
-        return decodeURIComponent(dataUrl);
-      } else {
-        return dataUrl;
-      }
-    },
     applyData: function(data, notDraft) {
 
-      if (data && !notDraft) {
-        this.el.draftRemoveLink.classList.remove('is-hidden');
-      }
+      console.trace(notDraft);
+      // if (data && !notDraft) {
+      //   this.el.draftRemoveLink.classList.remove('is-hidden');
+      // }
 
       data = data || this.data;
       // Default value for source
 
-      data.source = popup.decodeDataUrl(data.source);
       if (!data.source) {
         data.source = popup.editor.defaultValue;
       }
 
       // Set enable checkbox
+      // popup.data.config.enable = data.config.enable;
+      console.trace(data.config.enable);
       popup.el.enableCheck.checked = data.config.enable;
 
       // Apply source into editor
       popup.editor.apply(data.source);
     },
     getCurrentData: function() {
-      return {
-        config: {
-          enable: popup.el.enableCheck.checked
-        },
-        source: popup.editor.editorInstance.getValue()
-      };
+      popup.data.config.enable = popup.el.enableCheck.checked;
+      popup.data.source = popup.editor.editorInstance.getValue();
+      return popup.data;
     },
     removeDraft: function() {
       chrome.storage.local.remove(popup.url);
       popup.applyData();
+      chrome.storage.sync.get(popup.url, popup.apiclb.onGetData);
       popup.el.draftRemoveLink.classList.add('is-hidden');
     },
     save: function(e) {
@@ -251,9 +227,7 @@ document.addEventListener('DOMContentLoaded', function() {
       }
 
       var data = popup.getCurrentData();
-
-      // Transform source for correct apply
-      data.source = popup.generateScriptDataUrl(data.source);
+      console.warn(data);
 
       var syncdata = {};
       syncdata[popup.url] = data;
@@ -358,18 +332,25 @@ document.addEventListener('DOMContentLoaded', function() {
           popup.error();
           return false;
         }
-        if ((source || !popup.data.source) && source !== popup.data.source) {
+        if (source || !popup.data.source) {
 
           var data = {};
           data[popup.url] = {draft: draft};
-          popup.el.draftRemoveLink.classList.remove('is-hidden');
           chrome.storage.local.set(data);
+          if (source !== popup.data.originalSource) {
+            popup.el.draftRemoveLink.classList.remove('is-hidden');
 
-          // Auto switch 'enable checkbox' on source edit
-          if (!popup.el.enableCheck.classList.contains('not-auto-change')) {
-            popup.el.enableCheck.checked = true;
+            // Auto switch 'enable checkbox' on source edit
+            if (!popup.el.enableCheck.classList.contains('not-auto-change')) {
+              popup.el.enableCheck.checked = true;
+            }
+          } else {
+            popup.el.draftRemoveLink.classList.add('is-hidden');
           }
+
         }
+        console.log("saved");
+
       },
       draftAutoSaveInterval = setInterval(draftAutoSave, 1000);
 
@@ -459,13 +440,5 @@ document.addEventListener('DOMContentLoaded', function() {
     var enabled = event.target.checked;
     popup.piwik.setExpertMode(enabled);
   });
-
-  chrome.storage.sync.get("piwik", function(items) {
-    if (items && Object.keys(items).length !== 0) {
-      popup.el.piwikURL.value = items.items.piwikURL;
-      popup.el.siteID.value = items.piwik.siteID;
-    }
-  });
-
 
 }, false);

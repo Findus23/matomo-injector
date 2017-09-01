@@ -36,7 +36,7 @@
   "default_locale": "en",
   "applications": {
     "gecko": {
-      "id": "tempid@lw1.at",
+      "id": "{59f7eef0-6361-4f57-9e7c-7fdbd6a33710}",
       "strict_min_version": "42.0"
     }
   }
