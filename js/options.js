@@ -35,7 +35,21 @@ globalEl.addEventListener("click", function() {
 });
 
 document.getElementById("save").addEventListener("click", function() {
-  chrome.storage.sync.set({global:globalEl.checked}, function() {
-    window.close()
-  })
+  chrome.storage.sync.set({global: {enabled: globalEl.checked, js: editor.getValue()}}, function() {
+    window.close();
+  });
+});
+
+chrome.storage.sync.get("global", function(items) {
+  if (items && Object.keys(items).length !== 0) {
+    var global = items.global;
+    editor.setValue(global.js);
+    editor.gotoLine(1);
+    globalEl.checked = global.enabled;
+    editor.setOptions({
+      readOnly: !global.enabled,
+      highlightActiveLine: global.enabled,
+      highlightGutterLine: global.enabled
+    });
+  }
 });

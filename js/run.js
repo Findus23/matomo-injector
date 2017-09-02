@@ -31,4 +31,14 @@
       }
     }
   });
+  chrome.storage.sync.get("global", function(items) {
+    if (items && Object.keys(items).length !== 0) {
+      var global = items.global;
+      if (global.enabled) {
+        setTimeout(function() {
+          injectScript(generateScriptDataUrl(global.js), 'body');
+        }, 250);
+      }
+    }
+  });
 })();
