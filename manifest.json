@@ -1,10 +1,10 @@
 {
   "manifest_version": 2,
-  "name": "__MSG_extention_name__",
+  "name": "__MSG_extension_name__",
   "short_name": "piwik-injector",
   "version": "3.1.1",
   "author": "Lukas Winkler, xcv58, hromadadan",
-  "description": "__MSG_extention_description__",
+  "description": "__MSG_extension_description__",
   "icons": {
     "128": "img/logo-128x128.png",
     "256": "img/logo-256x256.png"
@@ -39,5 +39,9 @@
       "id": "{59f7eef0-6361-4f57-9e7c-7fdbd6a33710}",
       "strict_min_version": "42.0"
     }
+  },
+  "options_ui": {
+    "page": "options.html",
+    "chrome_style": false
   }
 }

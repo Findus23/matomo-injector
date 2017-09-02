@@ -1,11 +1,11 @@
 {
-  "extention_name": {
+  "extension_name": {
     "message": "Piwik Injector",
-    "description": "name of the extention"
+    "description": "name of the extension"
   },
-  "extention_description": {
+  "extension_description": {
     "message": "Füge eigenes Javascript auf beliebigen Seiten ein.",
-    "description": "a short description shown in the extention list"
+    "description": "a short description shown in the extension list"
   },
   "host_title": {
     "message": "Webseiten mit benutzerdefiniertem Javascript",

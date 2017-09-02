@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+    <head>
+        <title></title>
+
+        <link href="libs/purecss/base-min.css" rel="stylesheet">
+        <link href="libs/purecss/grids-min.css" rel="stylesheet">
+        <link href="libs/purecss/forms-nr-min.css" rel="stylesheet">
+        <link href="libs/purecss/buttons-min.css" rel="stylesheet">
+
+        <link href="css/style.css" rel="stylesheet">
+    </head>
+    <body>
+        <div class="options">
+            <label>
+                <span id="global-label"></span>
+                <input id="global" name="global" type="checkbox">
+            </label>
+
+            <div class="source__editor">
+                <pre id="ace-editor"></pre>
+                <input type="hidden" name="script" value="">
+            </div>
+
+            <div class="controls">
+                <button id="save" class="controls__save pure-button pure-button-primary"
+                        name="save"></button>
+                <button id="reset" class="controls__reset pure-button" name="reset"></button>
+                <button id="draft-remove" class="controls__remove-draft pure-button button-warning is-hidden"></button>
+            </div><!-- .controls -->
+        </div>
+        <script type="text/javascript" src="libs/ace/ace.js" charset="utf-8"></script>
+        <script src="js/options.js"></script>
+    </body>
+</html>

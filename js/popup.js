@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
       });
       popup.el.piwikURL.setAttribute("placeholder", chrome.i18n.getMessage("piwik_url_placeholder"));
       popup.el.siteID.setAttribute("placeholder", chrome.i18n.getMessage("site_id_placeholder"));
-      document.title = chrome.i18n.getMessage("extention_name");
+      document.title = chrome.i18n.getMessage("extension_name");
     },
     host: undefined,
     url: undefined,

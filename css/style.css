@@ -122,3 +122,7 @@ label span {
 #ace-editor {
   font-family: monospace
 }
+
+.options {
+  padding: 10px;
+}
