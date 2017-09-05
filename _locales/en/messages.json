@@ -24,11 +24,11 @@
     "description": "description for the first screenshot (https://github.com/Findus23/piwik-injector/blob/master/docs/screenshot_firefox_1.png)"
   },
   "extension_screenshot_2": {
-    "message": "",
+    "message": "Future visits to this domain will be tracked ...",
     "description": "description for  the second screenshot (https://github.com/Findus23/piwik-injector/blob/master/docs/screenshot_firefox_2.png)"
   },
   "extension_screenshot_3": {
-    "message": "",
+    "message": "... and processed by Piwik",
     "description": "description for the third screenshot (https://github.com/Findus23/piwik-injector/blob/master/docs/screenshot_firefox_3.png)"
   },
   "host_label": {
@@ -52,7 +52,7 @@
     "description": "reset-button text"
   },
   "reset_title": {
-    "message": "",
+    "message": "delete the settings for this domain",
     "description": "title text of reset button"
   },
   "placeholder_javascript": {
@@ -92,7 +92,7 @@
     "description": "label for checkbox"
   },
   "piwik_url_title": {
-    "message": "",
+    "message": "the URL to your piwik instance without trailing piwik.php or piwik.js",
     "description": "title text of piwik URL input"
   },
   "piwik_url_placeholder": {
@@ -100,7 +100,7 @@
     "description": "placeholder text of piwik URL input"
   },
   "site_id_title": {
-    "message": "",
+    "message": "the id of your website in Piwik",
     "description": "title text of site ID input"
   },
   "site_id_placeholder": {
