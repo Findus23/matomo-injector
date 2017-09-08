@@ -4,7 +4,7 @@
     "description": "name of the extension"
   },
   "extension_description": {
-    "message": "Füge eigenes Javascript auf beliebigen Seiten ein.",
+    "message": "Teste Piwik, die Open Source, auf Datenschutz spezialisierte Web-Analytics-Software, ohne auch nur eine Datei ändern zu müssen.",
     "description": "a short description shown in the extension list"
   },
   "host_title": {
