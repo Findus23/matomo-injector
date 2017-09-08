@@ -1,19 +1,11 @@
 {
   "extension_name": {
-    "message": "Piwik Injector",
+    "message": "Piwik Browser Injector",
     "description": "name of the extension"
   },
   "extension_description": {
     "message": "Try out Piwik, the open source, privacy aware web analytics software, without the need to modify anything.",
     "description": "a short description shown in the extension list; should be pretty short, but descriptive"
-  },
-  "extension_firefox_description": {
-    "message": "piwik, analytics, javascript, debugging",
-    "description": "longer description text for firefox extension page; can use HTML to stucture the content"
-  },
-  "extension_chrome_description": {
-    "message": "piwik, analytics, javascript, debugging",
-    "description": "longer description text for chrome extension page; can't use any formatting"
   },
   "extension_tags": {
     "message": "piwik, analytics, javascript, debugging, injecting, open source,",

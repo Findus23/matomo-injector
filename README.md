@@ -1,28 +1,26 @@
-customjs
+Piwik Browser Injector
 ========
 
-[Custom JavaScript for websites - Chrome Extension](https://chrome.google.com/webstore/detail/custom-javascript-for-web/poakhlngfciodnhlhhgnaaelnpjljija)
+[![Chrome Web Store](https://img.shields.io/chrome-web-store/v/bglodhjbeeolbfpodfacccmnjledmggn.svg)](https://chrome.google.com/webstore/detail/piwik-injector/bglodhjbeeolbfpodfacccmnjledmggn)
+[![Chrome Web Store](https://img.shields.io/badge/chrome%20web%20store-download%20now-brightgreen.svg)](https://chrome.google.com/webstore/detail/piwik-injector/bglodhjbeeolbfpodfacccmnjledmggn)
 
-Run custom JavaScript on any website.
-Use this tool to inject custom javascript in any website.
+<!--
+[![Mozilla Add-on](https://img.shields.io/amo/v/dustman.svg)]()
+[![Mozilla Add-on](https://img.shields.io/badge/download%20now-chrome%20extention-brightgreen.svg)](https://chrome.google.com/webstore/detail/piwik-injector/bglodhjbeeolbfpodfacccmnjledmggn)
+-->
+Piwik Browser Injector helps you to try out [Piwik](https://piwik.org/), the leading open source web analytics software, in cases where it isn't possible to modify the source of a website or when you just want to quickly see how the visitor data of your website would look like in Piwik.
 
-Your scripts are kept in the local storage and applied across domain URLs.
+### Usage:
+* open the domain, where you want to include the tracking code localy
+* click on the Piwik Browser Injector icon in your toolbar and enter the URL to your piwik instance and the ID of your website
+* if you want to try out advanced features you can enable the expert mode where you can freely modify the tracking code
 
-You can use jQuery 1.11.0 or 2.1.0 or your own external scripts.
+This extention is in an early development state and may include backward-incompatible changes in future versions.
 
-Usage:
-- site debugging (wrong list sort, etc.)
-- hiding annoyng popups and Ads
-- anything you can think of :)
+If you notice any bugs or have wishes for features open an issue on the github repository:
+https://github.com/Findus23/piwik-injector
 
-New features:
-- Ace Editor (formating, highlight, undo/redo by hotkeys)
-- Draft auto save (so doesn't matter when you close the window without saving)
-- Hosts (websites) switch (you can browse customjs of other websites)
-- Include external script (eq. Underscore.js is cool)
 
-![Mind map](http://hromadadan.com/customjs/mindmap.png)
+Licended under [the MIT License](https://github.com/Findus23/piwik-injector/blob/master/LICENSE) and based on the work of [hromadadan](https://github.com/guzart/customjs) and [xcv58](https://github.com/xcv58/Custom-JavaScript-for-Websites-2)
 
-Thanks to:
-- Ace - http://ace.c9.io/
-- Pure - http://purecss.io/
+![screenshot](docs/screenshot_chrome_1.png)
