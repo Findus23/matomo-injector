@@ -7,10 +7,19 @@
     "ace-builds": "^1.2.8",
     "purecss": "^1.0.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "htmllint-cli": "0.0.6",
+    "jshint": "^2.9.5",
+    "npm-run-all": "^4.1.1",
+    "web-ext": "^2.0.0"
+  },
   "scripts": {
     "copy": "bash copy.sh",
-    "build": "web-ext build --ignore-files '**/*.sh' 'docs/'"
+    "build": "web-ext build --ignore-files '**/*.sh' 'docs/'",
+    "webext_lint": "web-ext lint --warnings-as-errors --ignore-files 'libs/*' 'docs/' '**/*.sh'",
+    "jshint": "jshint js/",
+    "htmllint": "htmllint popup.html popup.html",
+    "all": "npm-run-all copy --parallel webext_lint jshint htmllint --sequential build"
   },
   "repository": {
     "type": "git",
