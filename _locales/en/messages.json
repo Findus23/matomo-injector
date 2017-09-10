@@ -106,5 +106,9 @@
   "global_label": {
     "message": "inject globally",
     "description": "checkbox on settings page"
+  },
+  "enabled_badge_title": {
+    "message": "This website is modified by Piwik Browser Injector.",
+    "description": "title text of attention icon on every page where extention is enabled."
   }
 }
