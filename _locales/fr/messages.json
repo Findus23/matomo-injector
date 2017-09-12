@@ -1,0 +1,114 @@
+{
+    "piwik_url_placeholder": {
+        "message": "piwik URL",
+        "description": "placeholder text of piwik URL input"
+    },
+    "goto_host_title": {
+        "message": "Allez au site sélectionné",
+        "description": "message if a currently not opened webpage is opened"
+    },
+    "site_id_title": {
+        "message": "l'id de votre site dans Piwik",
+        "description": "title text of site ID input"
+    },
+    "goto_host": {
+        "message": "allez à ",
+        "description": "when a host that is currently not opened, a button apears for opening this host in the current tab"
+    },
+    "error_message": {
+        "message": "Vous ne pouvez pas modifier cette page",
+        "description": "warning when injection fails"
+    },
+    "host_title": {
+        "message": "Liste des sites internet modifiés par votre js personnalisé",
+        "description": "title-text of host selection dropdown"
+    },
+    "reset": {
+        "message": "reset",
+        "description": "reset-button text"
+    },
+    "save_title": {
+        "message": "Enregistrez et appliquez le script",
+        "description": "title text of save button"
+    },
+    "site_id_placeholder": {
+        "message": "site ID",
+        "description": "placeholder text of site ID input"
+    },
+    "global_label": {
+        "message": "injectez le code partout",
+        "description": "checkbox on settings page"
+    },
+    "extension_tags": {
+        "message": "piwik, analytics, javascript, debugging, injecting, open source, analyse, audience",
+        "description": "tags for Firefox addon description (maximum 20)"
+    },
+    "piwik_url_title": {
+        "message": "indiquez l'URL de votre installation de Piwik sans le piwik.php ou piwik.js",
+        "description": "title text of piwik URL input"
+    },
+    "extension_screenshot_2": {
+        "message": "Les prochaines visites sur ce nom de domaine seront enregistrées...",
+        "description": "description for  the second screenshot (https://github.com/Findus23/piwik-injector/blob/master/docs/screenshot_firefox_2.png)"
+    },
+    "delete_warning": {
+        "message": "Souhaitez-vous vraîment supprimer toutes les données pour ce site?",
+        "description": "confirmation message when deleting the js for a host"
+    },
+    "reset_title": {
+        "message": "supprimer les paramètres pour ce domaine",
+        "description": "title text of reset button"
+    },
+    "placeholder_javascript": {
+        "message": "// Insérez votre code de suivi personnalisé ici...",
+        "description": "placeholder for javascript editor (needs to be a valid comment)"
+    },
+    "host_label": {
+        "message": "noms de domaine",
+        "description": "label of host selection dropdown"
+    },
+    "extension_description": {
+        "message": "Piwik Browser Injector vous permet d'injecter le code de suivi de Piwik (la solution d'analyse d'audience la plus utilisée du marché) sans vous ayez besoin d'accéder au code source de la page. Cela vous permet de pouvoir remonter dans une de vos installations de Piwik, le traffic d'un site en local.",
+        "description": "a short description shown in the extension list; should be pretty short, but descriptive"
+    },
+    "save": {
+        "message": "enregistrer",
+        "description": "save-button text"
+    },
+    "extension_screenshot_3": {
+        "message": "... et géré par Piwik",
+        "description": "description for the third screenshot (https://github.com/Findus23/piwik-injector/blob/master/docs/screenshot_firefox_3.png)"
+    },
+    "enabled_badge_title": {
+        "message": "Le site est actuellement modifié par Piwik Browser Injector.",
+        "description": "title text of attention icon on every page where extention is enabled."
+    },
+    "extension_screenshot_1": {
+        "message": "Ajoutez le code de Piwik à chaque site internet sans accéder au code source",
+        "description": "description for the first screenshot (https://github.com/Findus23/piwik-injector/blob/master/docs/screenshot_firefox_1.png)"
+    },
+    "expert_mode_label": {
+        "message": "Mode expert",
+        "description": "label of expert mode checkbox"
+    },
+    "error_tip": {
+        "message": "essayez de recharger cette page",
+        "description": "additional tip when injection fails"
+    },
+    "draft_remove": {
+        "message": "supprimer le brouillon",
+        "description": "buttontext"
+    },
+    "draft_remove_title": {
+        "message": "Ceci est un brouillon, cliquez dessus pour le supprimer",
+        "description": "title text of draft remove button"
+    },
+    "extension_name": {
+        "message": "Piwik Browser Injector",
+        "description": "name of the extension"
+    },
+    "enable_description": {
+        "message": "activer",
+        "description": "label for checkbox"
+    }
+}
