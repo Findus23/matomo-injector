@@ -1,5 +1,5 @@
 {
-  "name": "piwik-checker",
+  "name": "piwik-injector",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
