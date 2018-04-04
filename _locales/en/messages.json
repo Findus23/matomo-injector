@@ -1,27 +1,27 @@
 {
   "extension_name": {
-    "message": "Piwik Browser Injector",
+    "message": "Matomo Browser Injector",
     "description": "name of the extension"
   },
   "extension_description": {
-    "message": "Try out Piwik, the open source, privacy aware web analytics software, without the need to modify anything.",
+    "message": "Try out Matomo, the open source, privacy aware web analytics software, without the need to modify anything.",
     "description": "a short description shown in the extension list; should be pretty short, but descriptive"
   },
   "extension_tags": {
-    "message": "piwik, analytics, javascript, debugging, injecting, open source,",
+    "message": "matomo, analytics, javascript, debugging, injecting, open source,",
     "description": "tags for Firefox addon description (maximum 20)"
   },
   "extension_screenshot_1": {
-    "message": "Add the piwik tracking code to every website without access to the website source",
-    "description": "description for the first screenshot (https://github.com/Findus23/piwik-injector/blob/master/docs/screenshot_firefox_1.png)"
+    "message": "Add the matomo tracking code to every website without access to the website source",
+    "description": "description for the first screenshot (https://github.com/Findus23/matomo-injector/blob/master/docs/screenshot_firefox_1.png)"
   },
   "extension_screenshot_2": {
     "message": "Future visits to this domain will be tracked ...",
-    "description": "description for  the second screenshot (https://github.com/Findus23/piwik-injector/blob/master/docs/screenshot_firefox_2.png)"
+    "description": "description for  the second screenshot (https://github.com/Findus23/matomo-injector/blob/master/docs/screenshot_firefox_2.png)"
   },
   "extension_screenshot_3": {
-    "message": "... and processed by Piwik",
-    "description": "description for the third screenshot (https://github.com/Findus23/piwik-injector/blob/master/docs/screenshot_firefox_3.png)"
+    "message": "... and processed by Matomo",
+    "description": "description for the third screenshot (https://github.com/Findus23/matomo-injector/blob/master/docs/screenshot_firefox_3.png)"
   },
   "host_label": {
     "message": "hosts",
@@ -83,16 +83,16 @@
     "message": "enable",
     "description": "label for checkbox"
   },
-  "piwik_url_title": {
-    "message": "the URL to your piwik instance without trailing piwik.php or piwik.js",
-    "description": "title text of piwik URL input"
+  "matomo_url_title": {
+    "message": "the URL to your matomo instance without trailing matomo.php or matomo.js",
+    "description": "title text of matomo URL input"
   },
-  "piwik_url_placeholder": {
-    "message": "piwik URL",
-    "description": "placeholder text of piwik URL input"
+  "matomo_url_placeholder": {
+    "message": "matomo URL",
+    "description": "placeholder text of matomo URL input"
   },
   "site_id_title": {
-    "message": "the id of your website in Piwik",
+    "message": "the id of your website in Matomo",
     "description": "title text of site ID input"
   },
   "site_id_placeholder": {
@@ -108,7 +108,7 @@
     "description": "checkbox on settings page"
   },
   "enabled_badge_title": {
-    "message": "This website is modified by Piwik Browser Injector.",
+    "message": "This website is modified by Matomo Browser Injector.",
     "description": "title text of attention icon on every page where extention is enabled."
   }
 }

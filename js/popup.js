@@ -12,8 +12,8 @@ document.addEventListener('DOMContentLoaded', function() {
       resetBtn: document.getElementById("reset"),
       draftRemoveLink: document.getElementById("draft-remove"),
       error: document.getElementById("error"),
-      piwikForm: document.getElementById("piwik-form"),
-      piwikURL: document.getElementById("piwik-url"),
+      matomoForm: document.getElementById("matomo-form"),
+      matomoURL: document.getElementById("matomo-url"),
       siteID: document.getElementById("site-id"),
       expertMode: document.getElementById("expert-mode")
     },
@@ -23,12 +23,12 @@ document.addEventListener('DOMContentLoaded', function() {
         var translateKey = id.replace(/-/g, "_");
         document.getElementById(id).innerText = chrome.i18n.getMessage(translateKey);
       });
-      var translatableTitles = ["host", "goto-host", "save", "reset", "draft-remove", "piwik-url", "site-id"];
+      var translatableTitles = ["host", "goto-host", "save", "reset", "draft-remove", "matomo-url", "site-id"];
       translatableTitles.forEach(function(id) {
         var translateKey = id.replace("-", "_") + "_title";
         document.getElementById(id).setAttribute('title', chrome.i18n.getMessage(translateKey));
       });
-      popup.el.piwikURL.setAttribute("placeholder", chrome.i18n.getMessage("piwik_url_placeholder"));
+      popup.el.matomoURL.setAttribute("placeholder", chrome.i18n.getMessage("matomo_url_placeholder"));
       popup.el.siteID.setAttribute("placeholder", chrome.i18n.getMessage("site_id_placeholder"));
       document.title = chrome.i18n.getMessage("extension_name");
     },
@@ -114,11 +114,11 @@ document.addEventListener('DOMContentLoaded', function() {
         // Merge host's data to defaults
         popup.data = Object.assign(popup.data, response);
 
-        popup.piwik.loadExpertMode();
+        popup.matomo.loadExpertMode();
         console.warn("HALLO");
-        if (popup.data.piwik) {
-          popup.el.piwikURL.value = popup.data.piwik.piwikURL;
-          popup.el.siteID.value = popup.data.piwik.siteID;
+        if (popup.data.matomo) {
+          popup.el.matomoURL.value = popup.data.matomo.matomoURL;
+          popup.el.siteID.value = popup.data.matomo.siteID;
         }
 
         popup.data.originalSource = popup.data.source;
@@ -135,32 +135,32 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     },
 
-    piwik: {
+    matomo: {
       defaultTrackingCode: "var _paq = _paq || [];\n" +
       "/* tracker methods like \"setCustomDimension\" should be called before \"trackPageView\" */\n" +
       "_paq.push(['trackPageView']);\n" +
       "_paq.push(['enableLinkTracking']);\n" +
       "(function() {\n" +
-      "  var u=\"{{PIWIKURL}}\";\n" +
-      "  _paq.push(['setTrackerUrl', u+'piwik.php']);\n" +
+      "  var u=\"{{MATOMOURL}}\";\n" +
+      "  _paq.push(['setTrackerUrl', u+'matomo.php']);\n" +
       "  _paq.push(['setSiteId', '{{SITEID}}']);\n" +
       "  var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];\n" +
-      "  g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);\n" +
+      "  g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);\n" +
       "})();",
       handleTrackingCode: function() {
-        var piwikURL = encodeURI(popup.el.piwikURL.value);
-        if (!piwikURL.endsWith("/")) {
-          piwikURL += "/";
+        var matomoURL = encodeURI(popup.el.matomoURL.value);
+        if (!matomoURL.endsWith("/")) {
+          matomoURL += "/";
         }
         var siteID = parseInt(popup.el.siteID.value, 10);
-        if (!siteID || !piwikURL) {
+        if (!siteID || !matomoURL) {
           return false;
         }
-        var js = popup.piwik.defaultTrackingCode;
-        js = js.replace("{{PIWIKURL}}", piwikURL);
+        var js = popup.matomo.defaultTrackingCode;
+        js = js.replace("{{MATOMOURL}}", matomoURL);
         js = js.replace("{{SITEID}}", String(siteID));
         popup.editor.apply(js);
-        popup.data.piwik = {piwikURL: piwikURL, siteID: siteID};
+        popup.data.matomo = {matomoURL: matomoURL, siteID: siteID};
       },
       setExpertMode: function(expertMode, onLoad) {
         popup.editor.editorInstance.setOptions({
@@ -169,7 +169,7 @@ document.addEventListener('DOMContentLoaded', function() {
           highlightGutterLine: expertMode
         });
         popup.editor.editorInstance.container.style.backgroundColor = expertMode ? "white" : "#eaeded";
-        popup.el.piwikForm.querySelectorAll("input").forEach(function(input) {
+        popup.el.matomoForm.querySelectorAll("input").forEach(function(input) {
           input.disabled = expertMode;
         });
         popup.el.expertMode.checked = expertMode;
@@ -182,7 +182,7 @@ document.addEventListener('DOMContentLoaded', function() {
       },
       loadExpertMode: function() {
         var expertMode = (typeof popup.data.expertMode === "undefined") ? false : popup.data.expertMode;
-        popup.piwik.setExpertMode(expertMode);
+        popup.matomo.setExpertMode(expertMode);
       }
     },
     applyData: function(data, notDraft) {
@@ -316,8 +316,8 @@ document.addEventListener('DOMContentLoaded', function() {
   }, popup.apiclb.onSelectedTab);
 
 
-  popup.el.piwikForm.querySelectorAll("input").forEach(function(input) {
-    input.addEventListener("change", popup.piwik.handleTrackingCode);
+  popup.el.matomoForm.querySelectorAll("input").forEach(function(input) {
+    input.addEventListener("change", popup.matomo.handleTrackingCode);
   });
 
   /**
@@ -438,7 +438,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   popup.el.expertMode.addEventListener("change", function(event) {
     var enabled = event.target.checked;
-    popup.piwik.setExpertMode(enabled);
+    popup.matomo.setExpertMode(enabled);
   });
 
 }, false);

@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
   "name": "__MSG_extension_name__",
-  "short_name": "piwik-injector",
-  "version": "3.2.4",
+  "short_name": "matomo-injector",
+  "version": "3.3.0",
   "author": "Lukas Winkler, xcv58, hromadadan",
   "description": "__MSG_extension_description__",
   "icons": {
