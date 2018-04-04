@@ -15,8 +15,8 @@
   },
   "scripts": {
     "copy": "bash copy.sh",
-    "build": "web-ext build --ignore-files '**/*.sh' 'docs/'",
-    "webext_lint": "web-ext lint --warnings-as-errors --ignore-files 'libs/*' 'docs/' '**/*.sh'",
+    "build": "web-ext build --ignore-files '**/*.sh' 'docs/' 'yarn*'",
+    "webext_lint": "web-ext lint --warnings-as-errors --ignore-files 'libs/*' 'docs/' '**/*.sh' 'yarn*'",
     "jshint": "jshint js/",
     "htmllint": "htmllint popup.html popup.html",
     "all": "npm-run-all copy --parallel webext_lint jshint htmllint --sequential build"
