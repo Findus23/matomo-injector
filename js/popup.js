@@ -70,8 +70,6 @@ document.addEventListener('DOMContentLoaded', function() {
         chrome.storage.sync.get(popup.url, popup.apiclb.onGetData);
       },
       onGetData: function(items) {
-        // console.warn(response);
-        // console.info(chrome.runtime.lastError);
         var response = items[popup.url];
 
         /**
@@ -115,7 +113,6 @@ document.addEventListener('DOMContentLoaded', function() {
         popup.data = Object.assign(popup.data, response);
 
         popup.matomo.loadExpertMode();
-        console.warn("HALLO");
         if (popup.data.matomo) {
           popup.el.matomoURL.value = popup.data.matomo.matomoURL;
           popup.el.siteID.value = popup.data.matomo.siteID;
@@ -187,7 +184,6 @@ document.addEventListener('DOMContentLoaded', function() {
     },
     applyData: function(data, notDraft) {
 
-      console.trace(notDraft);
       // if (data && !notDraft) {
       //   this.el.draftRemoveLink.classList.remove('is-hidden');
       // }
@@ -201,7 +197,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
       // Set enable checkbox
       // popup.data.config.enable = data.config.enable;
-      console.trace(data.config.enable);
       popup.el.enableCheck.checked = data.config.enable;
 
       // Apply source into editor
@@ -227,7 +222,6 @@ document.addEventListener('DOMContentLoaded', function() {
       }
 
       var data = popup.getCurrentData();
-      console.warn(data);
 
       var syncdata = {};
       syncdata[popup.url] = data;
@@ -349,7 +343,6 @@ document.addEventListener('DOMContentLoaded', function() {
           }
 
         }
-        console.log("saved");
 
       },
       draftAutoSaveInterval = setInterval(draftAutoSave, 1000);
