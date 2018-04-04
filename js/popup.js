@@ -142,7 +142,7 @@ document.addEventListener('DOMContentLoaded', function() {
       "_paq.push(['enableLinkTracking']);\n" +
       "(function() {\n" +
       "  var u=\"{{MATOMOURL}}\";\n" +
-      "  _paq.push(['setTrackerUrl', u+'matomo.php']);\n" +
+      "  _paq.push(['setTrackerUrl', u+'piwik.php']);\n" +
       "  _paq.push(['setSiteId', '{{SITEID}}']);\n" +
       "  var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];\n" +
       "  g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);\n" +

@@ -12,7 +12,7 @@ Matomo Browser Injector helps you to try out [Matomo](https://matomo.org/), the 
 
 ### Usage:
 * open the domain, where you want to include the tracking code localy
-* click on the Matomo Browser Injector icon in your toolbar and enter the URL to your piwik instance and the ID of your website
+* click on the Matomo Browser Injector icon in your toolbar and enter the URL to your Matomo instance and the ID of your website
 * if you want to try out advanced features you can enable the expert mode where you can freely modify the tracking code
 
 This extention is in an early development state and may include backward-incompatible changes in future versions.
@@ -21,6 +21,6 @@ If you notice any bugs or have wishes for features open an issue on the github r
 https://github.com/Findus23/matomo-injector
 
 
-Licended under [the MIT License](https://github.com/Findus23/piwik-injector/blob/master/LICENSE) and based on the work of [hromadadan](https://github.com/guzart/customjs) and [xcv58](https://github.com/xcv58/Custom-JavaScript-for-Websites-2)
+Licended under [the MIT License](https://github.com/Findus23/matomo-injector/blob/master/LICENSE) and based on the work of [hromadadan](https://github.com/guzart/customjs) and [xcv58](https://github.com/xcv58/Custom-JavaScript-for-Websites-2)
 
 ![screenshot](docs/screenshot_chrome_1.png)

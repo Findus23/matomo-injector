@@ -1,14 +1,14 @@
 {
-    "piwik_url_placeholder": {
-        "message": "piwik URL",
-        "description": "placeholder text of piwik URL input"
+    "matomo_url_placeholder": {
+        "message": "matomo URL",
+        "description": "placeholder text of matomo URL input"
     },
     "goto_host_title": {
         "message": "Allez au site sélectionné",
         "description": "message if a currently not opened webpage is opened"
     },
     "site_id_title": {
-        "message": "l'id de votre site dans Piwik",
+        "message": "l'id de votre site dans Matomo",
         "description": "title text of site ID input"
     },
     "goto_host": {
@@ -40,12 +40,12 @@
         "description": "checkbox on settings page"
     },
     "extension_tags": {
-        "message": "piwik, analytics, javascript, debugging, injecting, open source, analyse, audience",
+        "message": "matomo, analytics, javascript, debugging, injecting, open source, analyse, audience",
         "description": "tags for Firefox addon description (maximum 20)"
     },
-    "piwik_url_title": {
-        "message": "indiquez l'URL de votre installation de Piwik sans le piwik.php ou piwik.js",
-        "description": "title text of piwik URL input"
+    "matomo_url_title": {
+        "message": "indiquez l'URL de votre installation de Matomo sans le piwik.php ou piwik.js",
+        "description": "title text of matomo URL input"
     },
     "extension_screenshot_2": {
         "message": "Les prochaines visites sur ce nom de domaine seront enregistrées...",
@@ -68,7 +68,7 @@
         "description": "label of host selection dropdown"
     },
     "extension_description": {
-        "message": "Piwik Browser Injector vous permet d'injecter le code de suivi de Piwik (la solution d'analyse d'audience la plus utilisée du marché) sans vous ayez besoin d'accéder au code source de la page. Cela vous permet de pouvoir remonter dans une de vos installations de Piwik, le traffic d'un site en local.",
+        "message": "Matomo Browser Injector vous permet d'injecter le code de suivi de Matomo (la solution d'analyse d'audience la plus utilisée du marché) sans vous ayez besoin d'accéder au code source de la page. Cela vous permet de pouvoir remonter dans une de vos installations de Matomo, le traffic d'un site en local.",
         "description": "a short description shown in the extension list; should be pretty short, but descriptive"
     },
     "save": {
@@ -76,16 +76,16 @@
         "description": "save-button text"
     },
     "extension_screenshot_3": {
-        "message": "... et géré par Piwik",
-        "description": "description for the third screenshot (https://github.com/Findus23/piwik-injector/blob/master/docs/screenshot_firefox_3.png)"
+        "message": "... et géré par Matomo",
+        "description": "description for the third screenshot (https://github.com/Findus23/matomo-injector/blob/master/docs/screenshot_firefox_3.png)"
     },
     "enabled_badge_title": {
-        "message": "Le site est actuellement modifié par Piwik Browser Injector.",
+        "message": "Le site est actuellement modifié par Matomo Browser Injector.",
         "description": "title text of attention icon on every page where extention is enabled."
     },
     "extension_screenshot_1": {
-        "message": "Ajoutez le code de Piwik à chaque site internet sans accéder au code source",
-        "description": "description for the first screenshot (https://github.com/Findus23/piwik-injector/blob/master/docs/screenshot_firefox_1.png)"
+        "message": "Ajoutez le code de Matomo à chaque site internet sans accéder au code source",
+        "description": "description for the first screenshot (https://github.com/Findus23/matomo-injector/blob/master/docs/screenshot_firefox_1.png)"
     },
     "expert_mode_label": {
         "message": "Mode expert",
@@ -104,7 +104,7 @@
         "description": "title text of draft remove button"
     },
     "extension_name": {
-        "message": "Piwik Browser Injector",
+        "message": "Matomo Browser Injector",
         "description": "name of the extension"
     },
     "enable_description": {

@@ -84,7 +84,7 @@
     "description": "label for checkbox"
   },
   "matomo_url_title": {
-    "message": "the URL to your matomo instance without trailing matomo.php or matomo.js",
+    "message": "the URL to your matomo instance without trailing piwik.php or piwik.js",
     "description": "title text of matomo URL input"
   },
   "matomo_url_placeholder": {
