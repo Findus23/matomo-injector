@@ -67,6 +67,7 @@
   chrome.storage.sync.get(website, function(obj) {
     var customjs = obj[website];
     if (customjs && customjs.config.enable) {
+      console.error(customjs);
       // Script
       if (customjs.source) {
         setTimeout(function() {

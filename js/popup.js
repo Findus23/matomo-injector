@@ -38,7 +38,8 @@ document.addEventListener('DOMContentLoaded', function() {
       config: {
         enable: false
       },
-      source: ''
+      source: '',
+      originalSource: chrome.i18n.getMessage("placeholder_javascript")
     },
     data: null,
     editor: {
@@ -245,26 +246,23 @@ document.addEventListener('DOMContentLoaded', function() {
         return false;
       }
 
-      if (confirm(chrome.i18n.getMessage("delete_warning"))) {
-
-        chrome.storage.sync.get("hosts", function(items) {
-              var hosts = items.hosts;
-              var index = hosts.indexOf(popup.url);
-              if (index > -1) {
-                hosts.splice(index, 1);
-              }
-              chrome.storage.sync.set({"hosts": hosts});
+      chrome.storage.sync.get("hosts", function(items) {
+            var hosts = items.hosts;
+            var index = hosts.indexOf(popup.url);
+            if (index > -1) {
+              hosts.splice(index, 1);
             }
-        );
+            chrome.storage.sync.set({"hosts": hosts});
+          }
+      );
 
-        chrome.storage.sync.remove(popup.url);
+      chrome.storage.sync.remove(popup.url);
 
-        // Set-up empty data
-        popup.data = Object.assign(true, {}, popup.emptyDataPattern);
-        popup.applyData();
+      // Set-up empty data
+      popup.data = Object.assign(true, {}, popup.emptyDataPattern);
+      popup.applyData();
 
-        popup.removeDraft();
-      }
+      popup.removeDraft();
 
       return false;
     },
