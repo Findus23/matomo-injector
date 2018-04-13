@@ -183,7 +183,7 @@ document.addEventListener('DOMContentLoaded', function() {
         popup.matomo.setExpertMode(expertMode);
       }
     },
-    applyData: function(data, notDraft) {
+    applyData: function(data) {
 
       // if (data && !notDraft) {
       //   this.el.draftRemoveLink.classList.remove('is-hidden');
@@ -350,7 +350,7 @@ document.addEventListener('DOMContentLoaded', function() {
    * Change host by select
    */
 
-  popup.el.hostSelect.addEventListener('change', function(e) {
+  popup.el.hostSelect.addEventListener('change', function() {
     var host = this.value;
     chrome.storage.sync.get(host, function(items) {
       var hostData = items[host];

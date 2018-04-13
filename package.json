@@ -8,8 +8,8 @@
     "purecss": "^1.0.0"
   },
   "devDependencies": {
+    "eslint": "^4.19.1",
     "htmllint-cli": "0.0.6",
-    "jshint": "^2.9.5",
     "npm-run-all": "^4.1.2",
     "web-ext": "^2.3.0"
   },
@@ -17,9 +17,9 @@
     "copy": "bash copy.sh",
     "build": "web-ext build --ignore-files '**/*.sh' 'docs/' 'yarn*'",
     "webext_lint": "web-ext lint --warnings-as-errors --ignore-files 'libs/*' 'docs/' '**/*.sh' 'yarn*'",
-    "jshint": "jshint js/",
+    "eslint": "eslint js/",
     "htmllint": "htmllint popup.html popup.html",
-    "all": "npm-run-all copy --parallel webext_lint jshint htmllint --sequential build"
+    "all": "npm-run-all copy --parallel webext_lint eslint htmllint --sequential build"
   },
   "repository": {
     "type": "git",

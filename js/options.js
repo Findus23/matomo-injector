@@ -30,8 +30,6 @@ globalEl.addEventListener("click", function() {
     highlightActiveLine: enabled,
     highlightGutterLine: enabled
   });
-  if (globalEl.checked) {
-  }
 });
 
 document.getElementById("save").addEventListener("click", function() {
