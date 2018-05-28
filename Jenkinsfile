@@ -13,9 +13,9 @@ pipeline {
     }
     stage('Tests') {
       parallel {
-        stage('jshint') {
+        stage('eshint') {
           steps {
-            sh 'yarn run jshint'
+            sh 'yarn run eshint'
           }
         }
         stage('webext_lint') {
