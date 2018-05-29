@@ -3,6 +3,6 @@ node_js:
   - "node"
 
 script:
-  - npm run jshint
-  - npm run webext_lint
-  - npm run htmllint
+  - yarn run eslint
+  - yarn run webext_lint
+  - yarn run htmllint
