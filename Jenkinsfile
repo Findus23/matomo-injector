@@ -28,6 +28,16 @@ pipeline {
             sh 'yarn run htmllint'
           }
         }
+        stage('build') {
+          steps {
+            sh 'yarn run build'
+          }
+        }
+      }
+    }
+    stage('Artefacts') {
+      steps {
+        archiveArtifacts 'web-ext-artifacts/'
       }
     }
   }
