@@ -1,4 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
+  chrome.storage.sync.get(null, function(data) {
+    document.getElementById("export-data").value = JSON.stringify(data, null, 4);
+  });
 
   var popup = {
     key: 'popup',
@@ -18,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
       expertMode: document.getElementById("expert-mode")
     },
     applyi18n: function() {
-      var translatableIDs = ["error-message", "error-tip", "save", "reset", "goto-host", "enable-description", "host-label", "expert-mode-label", "draft-remove"];
+      var translatableIDs = ["error-message", "error-tip", "save", "reset", "goto-host", "enable-description", "host-label", "expert-mode-label", "draft-remove", "deprecation-warning", "export-info"];
       translatableIDs.forEach(function(id) {
         var translateKey = id.replace(/-/g, "_");
         document.getElementById(id).innerText = chrome.i18n.getMessage(translateKey);
@@ -79,27 +82,27 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
         chrome.storage.sync.get("hosts", function(items) {
-              var hosts = items.hosts;
-              if (!hosts) {
-                hosts = [];
-              }
-              // Add current host to list
-              if (hosts.indexOf(popup.url) === -1) {
-                hosts.push(popup.url);
-              }
-              // Fill 'hosts select'
-              hosts.forEach(function(host) {
-                var option = document.createElement('option');
-                option.innerText = host;
-                if (host === popup.url) {
-                  option.setAttribute('selected', 'selected');
-                }
-                popup.el.hostSelect.appendChild(option);
-                if (!response || typeof response.host !== 'string') {
-                  chrome.storage.sync.set({"hosts": hosts});
-                }
-              });
+            var hosts = items.hosts;
+            if (!hosts) {
+              hosts = [];
             }
+            // Add current host to list
+            if (hosts.indexOf(popup.url) === -1) {
+              hosts.push(popup.url);
+            }
+            // Fill 'hosts select'
+            hosts.forEach(function(host) {
+              var option = document.createElement('option');
+              option.innerText = host;
+              if (host === popup.url) {
+                option.setAttribute('selected', 'selected');
+              }
+              popup.el.hostSelect.appendChild(option);
+              if (!response || typeof response.host !== 'string') {
+                chrome.storage.sync.set({"hosts": hosts});
+              }
+            });
+          }
         );
         /**
          * Set-up data (script, enable, include, extra)
@@ -135,16 +138,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
     matomo: {
       defaultTrackingCode: "var _paq = _paq || [];\n" +
-      "/* tracker methods like \"setCustomDimension\" should be called before \"trackPageView\" */\n" +
-      "_paq.push(['trackPageView']);\n" +
-      "_paq.push(['enableLinkTracking']);\n" +
-      "(function() {\n" +
-      "  var u=\"{{MATOMOURL}}\";\n" +
-      "  _paq.push(['setTrackerUrl', u+'piwik.php']);\n" +
-      "  _paq.push(['setSiteId', '{{SITEID}}']);\n" +
-      "  var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];\n" +
-      "  g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);\n" +
-      "})();",
+        "/* tracker methods like \"setCustomDimension\" should be called before \"trackPageView\" */\n" +
+        "_paq.push(['trackPageView']);\n" +
+        "_paq.push(['enableLinkTracking']);\n" +
+        "(function() {\n" +
+        "  var u=\"{{MATOMOURL}}\";\n" +
+        "  _paq.push(['setTrackerUrl', u+'piwik.php']);\n" +
+        "  _paq.push(['setSiteId', '{{SITEID}}']);\n" +
+        "  var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];\n" +
+        "  g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);\n" +
+        "})();",
       handleTrackingCode: function() {
         var matomoURL = encodeURI(popup.el.matomoURL.value);
         if (!matomoURL.endsWith("/")) {
@@ -247,13 +250,13 @@ document.addEventListener('DOMContentLoaded', function() {
       }
 
       chrome.storage.sync.get("hosts", function(items) {
-            var hosts = items.hosts;
-            var index = hosts.indexOf(popup.url);
-            if (index > -1) {
-              hosts.splice(index, 1);
-            }
-            chrome.storage.sync.set({"hosts": hosts});
+          var hosts = items.hosts;
+          var index = hosts.indexOf(popup.url);
+          if (index > -1) {
+            hosts.splice(index, 1);
           }
+          chrome.storage.sync.set({"hosts": hosts});
+        }
       );
 
       chrome.storage.sync.remove(popup.url);
@@ -317,33 +320,33 @@ document.addEventListener('DOMContentLoaded', function() {
    */
 
   var draftAutoSave = function() {
-        var draft = popup.getCurrentData(),
-            source = draft.source;
+      var draft = popup.getCurrentData(),
+        source = draft.source;
 
-        if (!popup.data) {
-          popup.error();
-          return false;
-        }
-        if (source || !popup.data.source) {
+      if (!popup.data) {
+        popup.error();
+        return false;
+      }
+      if (source || !popup.data.source) {
 
-          var data = {};
-          data[popup.url] = {draft: draft};
-          chrome.storage.local.set(data);
-          if (source !== popup.data.originalSource) {
-            popup.el.draftRemoveLink.classList.remove('is-hidden');
+        var data = {};
+        data[popup.url] = {draft: draft};
+        chrome.storage.local.set(data);
+        if (source !== popup.data.originalSource) {
+          popup.el.draftRemoveLink.classList.remove('is-hidden');
 
-            // Auto switch 'enable checkbox' on source edit
-            if (!popup.el.enableCheck.classList.contains('not-auto-change')) {
-              popup.el.enableCheck.checked = true;
-            }
-          } else {
-            popup.el.draftRemoveLink.classList.add('is-hidden');
+          // Auto switch 'enable checkbox' on source edit
+          if (!popup.el.enableCheck.classList.contains('not-auto-change')) {
+            popup.el.enableCheck.checked = true;
           }
-
+        } else {
+          popup.el.draftRemoveLink.classList.add('is-hidden');
         }
 
-      },
-      draftAutoSaveInterval = setInterval(draftAutoSave, 1000);
+      }
+
+    },
+    draftAutoSaveInterval = setInterval(draftAutoSave, 1000);
 
 
   /**
@@ -370,12 +373,11 @@ document.addEventListener('DOMContentLoaded', function() {
         try {
           popup.applyData(hostData, true);
         }
-            // Hotfix for host without customjs
+          // Hotfix for host without customjs
         catch (err) {
           popup.applyData(Object.assign(true, {}, popup.emptyDataPattern), true);
         }
-      }
-      else {
+      } else {
         // Start making drafts
         draftAutoSaveInterval = setInterval(draftAutoSave, 1000);
 

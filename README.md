@@ -1,6 +1,14 @@
 Matomo Browser Injector
 ========
 
+## This browser extension isn't maintained anymore!
+
+If you still wan't to inject Matomo scripts into websites without modifying them, take a look at the [Greasemonkey browser extension](https://www.greasespot.net/) that allows creating arbitrary userscripts.
+
+This plugin is licensed under [the MIT License](https://github.com/Findus23/matomo-injector/blob/master/LICENSE), so feel free to fork it, if you want to continue maintaining it.
+
+-----------
+
 [![Chrome Web Store](https://img.shields.io/chrome-web-store/v/bglodhjbeeolbfpodfacccmnjledmggn.svg)](https://chrome.google.com/webstore/detail/matomo-browser-injector/bglodhjbeeolbfpodfacccmnjledmggn)
 [![Chrome Web Store](https://img.shields.io/badge/chrome%20web%20store-download%20now-brightgreen.svg)](https://chrome.google.com/webstore/detail/matomo-browser-injector/bglodhjbeeolbfpodfacccmnjledmggn)
 
@@ -21,6 +29,6 @@ If you notice any bugs or have wishes for features open an issue on the github r
 https://github.com/Findus23/matomo-injector
 
 
-Licended under [the MIT License](https://github.com/Findus23/matomo-injector/blob/master/LICENSE) and based on the work of [hromadadan](https://github.com/guzart/customjs) and [xcv58](https://github.com/xcv58/Custom-JavaScript-for-Websites-2)
+Licensed under [the MIT License](https://github.com/Findus23/matomo-injector/blob/master/LICENSE) and based on the work of [hromadadan](https://github.com/guzart/customjs) and [xcv58](https://github.com/xcv58/Custom-JavaScript-for-Websites-2)
 
 ![screenshot](docs/screenshot_chrome_1.png)

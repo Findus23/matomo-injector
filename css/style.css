@@ -126,3 +126,17 @@ label span {
 .options {
   padding: 10px;
 }
+
+#deprecation-block {
+  margin-top: 1rem;
+  font-size: 20px;
+}
+
+#export-info {
+  margin-top: 1rem;
+  font-size: 15px;
+}
+#export-data {
+  width: 100%;
+  height: 150px;
+}

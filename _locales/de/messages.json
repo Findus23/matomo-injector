@@ -62,5 +62,13 @@
   "enable_description": {
     "message": "aktivieren",
     "description": "label for checkbox"
+  },
+  "deprecation_warning": {
+    "message": "Dieses Plugin wird nicht mehr gewartet!",
+    "description": "shown in popup"
+  },
+  "export_info": {
+    "message": "Sie können hier alle Ihre Daten exportieren:",
+    "description": ""
   }
 }

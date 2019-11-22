@@ -107,6 +107,14 @@
     "message": "inject globally",
     "description": "checkbox on settings page"
   },
+  "deprecation_warning": {
+    "message": "this plugin isn't maintained anymore!",
+    "description": "shown in popup"
+  },
+  "export_info": {
+    "message": "You can export all of your data here:",
+    "description": ""
+  },
   "enabled_badge_title": {
     "message": "This website is modified by Matomo Browser Injector.",
     "description": "title text of attention icon on every page where extention is enabled."
